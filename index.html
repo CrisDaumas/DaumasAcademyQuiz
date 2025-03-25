@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Game</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333; }
+        #game-container { margin-top: 50px; }
+        .option { padding: 10px 20px; margin: 10px; font-size: 18px; cursor: pointer; border: none; }
+        .correct { background-color: green; color: white; }
+        .incorrect { background-color: red; color: white; }
+        #settings { display: none; position: fixed; top: 10%; left: 50%; transform: translateX(-50%); background: white; padding: 20px; border: 2px solid black; }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <h1 id="question">Loading...</h1>
+        <button id="option1" class="option"></button>
+        <button id="option2" class="option"></button>
+        <h2 id="score" style="display: none;"></h2>
+    </div>
+    <div id="settings">
+        <textarea id="settings-input" rows="5" cols="40">(Choose the correct option: [Josh said that if he wins the lottery, he will buy a house.][*Josh said that if he won the lottery, he would buy a house.]) (Choose the correct option: [*Maria said that if she had known about the party, she would have come.][Maria said that if she had known about the party, she would come.]) (Choose the correct option: [Mark said that if they leave now, they will catch the train.][*Mark said that if they left now, they would catch the train.]) (Choose the correct option: [Sophie said that if I study harder, I will pass the exam.][*Sophie said that if I studied harder, I would pass the exam.]) (Choose the correct option: [*John said that if he had more time, he would travel the world.][John said that if he had more time, he will travel the world.]) (Choose the correct option: [*If she were here, she would help us.][If she was here, she would help us.]) (Choose the correct option: [*If I had known about the concert, I would have gone.][If I had known about the concert, I would go.]) (Choose the correct option: [*If they had studied harder, they would have passed the test.][If they studied harder, they would have passed the test.]) (Choose the correct option: [*If I see him tomorrow, I will give him the book.][If I will see him tomorrow, I will give him the book.]) (Choose the correct option: [*If we had enough money, we would buy a car.][If we had enough money, we will buy a car.])</textarea>
+        <button onclick="saveSettings()">Save</button>
+    </div>
+    <script>
+        let questions = [];
+        let currentQuestionIndex = 0;
+        let correctAnswers = 0;
+        let settingsVisible = false;
+
+        function parseQuestions(input) {
+            let matches = input.match(/\((.*?)\)/g);
+            questions = matches.map(match => {
+                let parts = match.slice(1, -1).split(/\[(.*?)\]/g).filter(Boolean);
+                let question = parts[0].trim();
+                let options = parts.slice(1).map(opt => opt.trim());
+                let correctIndex = options.findIndex(opt => opt.includes('*'));
+                options = options.map(opt => opt.replace('*', ''));
+                return { question, options, correctIndex };
+            });
+            currentQuestionIndex = 0;
+            correctAnswers = 0;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if (currentQuestionIndex >= questions.length) {
+                document.getElementById("game-container").innerHTML = `<h1>Game Over!</h1><h2>You got ${correctAnswers} out of ${questions.length} correct!</h2>`;
+                return;
+            }
+            
+            let { question, options, correctIndex } = questions[currentQuestionIndex];
+            document.getElementById("question").textContent = question;
+            let randomOrder = Math.random() < 0.5 ? [0, 1] : [1, 0];
+            document.getElementById("option1").textContent = options[randomOrder[0]];
+            document.getElementById("option2").textContent = options[randomOrder[1]];
+            document.getElementById("option1").onclick = () => checkAnswer(randomOrder[0] === correctIndex, document.getElementById("option1"));
+            document.getElementById("option2").onclick = () => checkAnswer(randomOrder[1] === correctIndex, document.getElementById("option2"));
+        }
+
+        function checkAnswer(isCorrect, button) {
+            button.classList.add(isCorrect ? "correct" : "incorrect");
+            if (isCorrect) correctAnswers++;
+            setTimeout(() => {
+                button.classList.remove("correct", "incorrect");
+                currentQuestionIndex++;
+                loadQuestion();
+            }, 1000);
+        }
+
+        function saveSettings() {
+            parseQuestions(document.getElementById("settings-input").value);
+            toggleSettings(false);
+        }
+
+        function toggleSettings(forceClose = false) {
+            settingsVisible = forceClose ? false : !settingsVisible;
+            document.getElementById("settings").style.display = settingsVisible ? "block" : "none";
+        }
+
+        document.addEventListener("keydown", event => {
+            if (event.code === "NumpadDivide") toggleSettings();
+        });
+
+        parseQuestions(document.getElementById("settings-input").value);
+    </script>
+</body>
+</html>
