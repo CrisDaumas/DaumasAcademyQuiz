@@ -1,90 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Game</title>
-    <style>
-        body { text-align: center; font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333; }
-        #game-container { margin-top: 50px; }
-        .option { padding: 10px 20px; margin: 10px; font-size: 18px; cursor: pointer; border: none; }
-        .correct { background-color: green; color: white; }
-        .incorrect { background-color: red; color: white; }
-        #settings { display: none; position: fixed; top: 10%; left: 50%; transform: translateX(-50%); background: white; padding: 20px; border: 2px solid black; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Welcome</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f8ff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 5px;
+    }
+    #error {
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
-    <div id="game-container">
-        <h1 id="question">Loading...</h1>
-        <button id="option1" class="option"></button>
-        <button id="option2" class="option"></button>
-        <h2 id="score" style="display: none;"></h2>
-    </div>
-    <div id="settings">
-        <textarea id="settings-input" rows="5" cols="40">(Julia was waiting for me ___ the bus stop. [*at][on]) (We always go to the beach ___ the summer. [*in][on]) (Michael has a meeting ___ 3 p.m. today. [*at][in]) (They left their bags ___ the hotel room. [*in][on]) (My birthday is ___ the 15th of August. [*on][in]) (The children are playing ___ the park right now. [*in][at]) (The keys are ___ the kitchen table. [*on][at]) (We visited my grandparents ___ Christmas Eve. [on][*at]) (There was a funny show ___ TV last night. [*on][in]) (She usually studies ___ the evening after dinner. [*in][on])</textarea>
-        <button onclick="saveSettings()">Save</button>
-    </div>
-    <script>
-        let questions = [];
-        let currentQuestionIndex = 0;
-        let correctAnswers = 0;
-        let settingsVisible = false;
+  <h1>Enter your name to access your page:</h1>
+  <input type="text" id="nameInput" placeholder="Your name..." />
+  <button onclick="goToPage()">Go</button>
+  <div id="error"></div>
 
-        function parseQuestions(input) {
-            let matches = input.match(/\((.*?)\)/g);
-            questions = matches.map(match => {
-                let parts = match.slice(1, -1).split(/\[(.*?)\]/g).filter(Boolean);
-                let question = parts[0].trim();
-                let options = parts.slice(1).map(opt => opt.trim());
-                let correctIndex = options.findIndex(opt => opt.includes('*'));
-                options = options.map(opt => opt.replace('*', ''));
-                return { question, options, correctIndex };
-            });
-            currentQuestionIndex = 0;
-            correctAnswers = 0;
-            loadQuestion();
+  <script>
+    async function goToPage() {
+      const name = document.getElementById('nameInput').value.trim().toLowerCase();
+      const errorDiv = document.getElementById('error');
+      errorDiv.textContent = '';
+
+      if (!name) {
+        errorDiv.textContent = "Please enter a name.";
+        return;
+      }
+
+      const pageUrl = `${name}.html`;
+
+      try {
+        const response = await fetch(pageUrl, { method: 'HEAD' });
+        if (response.ok) {
+          window.location.href = pageUrl;
+        } else {
+          errorDiv.textContent = "Page not found. Please check the name.";
         }
-
-        function loadQuestion() {
-            if (currentQuestionIndex >= questions.length) {
-                document.getElementById("game-container").innerHTML = `<h1>Game Over!</h1><h2>You got ${correctAnswers} out of ${questions.length} correct!</h2>`;
-                return;
-            }
-            
-            let { question, options, correctIndex } = questions[currentQuestionIndex];
-            document.getElementById("question").textContent = question;
-            let randomOrder = Math.random() < 0.5 ? [0, 1] : [1, 0];
-            document.getElementById("option1").textContent = options[randomOrder[0]];
-            document.getElementById("option2").textContent = options[randomOrder[1]];
-            document.getElementById("option1").onclick = () => checkAnswer(randomOrder[0] === correctIndex, document.getElementById("option1"));
-            document.getElementById("option2").onclick = () => checkAnswer(randomOrder[1] === correctIndex, document.getElementById("option2"));
-        }
-
-        function checkAnswer(isCorrect, button) {
-            button.classList.add(isCorrect ? "correct" : "incorrect");
-            if (isCorrect) correctAnswers++;
-            setTimeout(() => {
-                button.classList.remove("correct", "incorrect");
-                currentQuestionIndex++;
-                loadQuestion();
-            }, 1000);
-        }
-
-        function saveSettings() {
-            parseQuestions(document.getElementById("settings-input").value);
-            toggleSettings(false);
-        }
-
-        function toggleSettings(forceClose = false) {
-            settingsVisible = forceClose ? false : !settingsVisible;
-            document.getElementById("settings").style.display = settingsVisible ? "block" : "none";
-        }
-
-        document.addEventListener("keydown", event => {
-            if (event.code === "NumpadDivide") toggleSettings();
-        });
-
-        parseQuestions(document.getElementById("settings-input").value);
-    </script>
+      } catch (err) {
+        errorDiv.textContent = "An error occurred. Please try again.";
+      }
+    }
+  </script>
 </body>
 </html>
