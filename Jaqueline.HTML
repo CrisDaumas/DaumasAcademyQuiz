@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daumas Academy - Practice (Jaqueline)</title>
+  <link rel="icon" href="icon.png" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff8e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      padding: 30px;
+      max-width: 600px;
+      width: 90%;
+      text-align: center;
+    }
+
+    h1 {
+      color: #6a1b9a;
+      margin-bottom: 20px;
+    }
+
+    .question {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .option {
+      background-color: #f0f0f0;
+      border: none;
+      padding: 12px 20px;
+      margin: 10px 0;
+      width: 100%;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .option:hover {
+      background-color: #e0e0e0;
+    }
+
+    .correct {
+      background-color: #c8e6c9 !important;
+    }
+
+    .incorrect {
+      background-color: #ffcdd2 !important;
+    }
+
+    .score {
+      font-size: 22px;
+      color: #2e7d32;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Hi Jaqueline! Let's practice the Simple Present</h1>
+    <div id="quiz">
+      <div class="question" id="question">Loading question...</div>
+      <button class="option" onclick="selectOption(this)" id="opt0"></button>
+      <button class="option" onclick="selectOption(this)" id="opt1"></button>
+      <button class="option" onclick="selectOption(this)" id="opt2"></button>
+    </div>
+    <div class="score" id="score" style="display: none;"></div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "He ___ to the office every morning.",
+        options: ["go", "goes", "going"],
+        correct: 1
+      },
+      {
+        question: "They ___ enjoy classical music.",
+        options: ["doesn't", "don't", "not"],
+        correct: 1
+      },
+      {
+        question: "___ she speak three languages?",
+        options: ["Does", "Do", "Is"],
+        correct: 0
+      },
+      {
+        question: "My brother ___ coffee after lunch.",
+        options: ["drink", "drinks", "drinking"],
+        correct: 1
+      },
+      {
+        question: "We ___ our homework before dinner.",
+        options: ["finish", "finishes", "finished"],
+        correct: 0
+      },
+      {
+        question: "The dog ___ the mailman every day.",
+        options: ["barks", "bark", "barking"],
+        correct: 0
+      },
+      {
+        question: "She ___ manage the project well.",
+        options: ["don’t", "doesn’t", "isn’t"],
+        correct: 1
+      },
+      {
+        question: "___ they usually discuss the reports on Monday?",
+        options: ["Do", "Does", "Are"],
+        correct: 0
+      },
+      {
+        question: "It ___ a lot in April.",
+        options: ["rain", "rains", "raining"],
+        correct: 1
+      },
+      {
+        question: "I ___ prefer tea over coffee.",
+        options: ["am", "do", "does"],
+        correct: 1
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    function loadQuestion() {
+      const q = questions[current];
+      document.getElementById("question").textContent = q.question;
+      q.options.forEach((opt, i) => {
+        const btn = document.getElementById("opt" + i);
+        btn.textContent = opt;
+        btn.className = "option";
+        btn.disabled = false;
+      });
+    }
+
+    function selectOption(btn) {
+      const q = questions[current];
+      const selectedIndex = parseInt(btn.id.slice(-1));
+      const correctBtn = document.getElementById("opt" + q.correct);
+
+      document.getElementById("opt0").disabled = true;
+      document.getElementById("opt1").disabled = true;
+      document.getElementById("opt2").disabled = true;
+
+      if (selectedIndex === q.correct) {
+        btn.classList.add("correct");
+        score++;
+      } else {
+        btn.classList.add("incorrect");
+        correctBtn.classList.add("correct");
+      }
+
+      setTimeout(() => {
+        current++;
+        if (current < questions.length) {
+          loadQuestion();
+        } else {
+          document.getElementById("quiz").style.display = "none";
+          document.getElementById("score").style.display = "block";
+          document.getElementById("score").textContent = `Jaqueline, you got ${score} out of ${questions.length} correct! 🌟`;
+        }
+      }, 2000);
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
