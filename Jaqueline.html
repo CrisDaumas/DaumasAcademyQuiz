@@ -8,7 +8,7 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #fff8e1;
+      background: #e8f5e9;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -27,7 +27,7 @@
     }
 
     h1 {
-      color: #6a1b9a;
+      color: #2e7d32;
       margin-bottom: 20px;
     }
 
@@ -68,7 +68,7 @@
 </head>
 <body>
   <div class="container">
-    <h1>Hi Jaqueline! Let's practice the Simple Present</h1>
+    <h1>Hi Jaqueline! Let's practice "There is / There are"</h1>
     <div id="quiz">
       <div class="question" id="question">Loading question...</div>
       <button class="option" onclick="selectOption(this)" id="opt0"></button>
@@ -80,56 +80,16 @@
 
   <script>
     const questions = [
-      {
-        question: "He ___ to the office every morning.",
-        options: ["go", "goes", "going"],
-        correct: 1
-      },
-      {
-        question: "They ___ enjoy classical music.",
-        options: ["doesn't", "don't", "not"],
-        correct: 1
-      },
-      {
-        question: "___ she speak three languages?",
-        options: ["Does", "Do", "Is"],
-        correct: 0
-      },
-      {
-        question: "My brother ___ coffee after lunch.",
-        options: ["drink", "drinks", "drinking"],
-        correct: 1
-      },
-      {
-        question: "We ___ our homework before dinner.",
-        options: ["finish", "finishes", "finished"],
-        correct: 0
-      },
-      {
-        question: "The dog ___ the mailman every day.",
-        options: ["barks", "bark", "barking"],
-        correct: 0
-      },
-      {
-        question: "She ___ manage the project well.",
-        options: ["don’t", "doesn’t", "isn’t"],
-        correct: 1
-      },
-      {
-        question: "___ they usually discuss the reports on Monday?",
-        options: ["Do", "Does", "Are"],
-        correct: 0
-      },
-      {
-        question: "It ___ a lot in April.",
-        options: ["rain", "rains", "raining"],
-        correct: 1
-      },
-      {
-        question: "I ___ prefer tea over coffee.",
-        options: ["am", "do", "does"],
-        correct: 1
-      }
+      { question: "___ a supermarket near my house.", options: ["There are", "There is", "Is there"], correct: 1 },
+      { question: "___ many restaurants in this area.", options: ["There is", "Are there", "There are"], correct: 2 },
+      { question: "___ a library next to the museum?", options: ["Are there", "Is there", "There are"], correct: 1 },
+      { question: "There ___ a large park behind the hotel.", options: ["is", "are", "be"], correct: 0 },
+      { question: "There ___ any chairs in the room.", options: ["isn't", "aren’t", "doesn't"], correct: 1 },
+      { question: "___ any good cafés around here?", options: ["Is there", "There is", "Are there"], correct: 2 },
+      { question: "There ___ a beautiful painting on the wall.", options: ["is", "are", "has"], correct: 0 },
+      { question: "There ___ three students in the classroom.", options: ["is", "are", "was"], correct: 1 },
+      { question: "___ a problem with the internet connection?", options: ["Are there", "Is there", "There are"], correct: 1 },
+      { question: "There ___ no milk in the fridge.", options: ["is", "are", "isn't"], correct: 2 }
     ];
 
     let current = 0;
@@ -170,7 +130,7 @@
         } else {
           document.getElementById("quiz").style.display = "none";
           document.getElementById("score").style.display = "block";
-          document.getElementById("score").textContent = `Jaqueline, you got ${score} out of ${questions.length} correct! 🌟`;
+          document.getElementById("score").textContent = `Jaqueline, you got ${score} out of ${questions.length} correct! 🎉`;
         }
       }, 2000);
     }
