@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Daumas Academy - Vaneska's Practice</title>
+  <title>Daumas Academy - Practice (Vaneska)</title>
   <link rel="icon" href="icon.png" />
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #e0f7fa;
+      background: #e8f5e9;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -21,13 +21,13 @@
       border-radius: 15px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
       padding: 30px;
-      max-width: 500px;
+      max-width: 600px;
       width: 90%;
       text-align: center;
     }
 
     h1 {
-      color: #007acc;
+      color: #2e7d32;
       margin-bottom: 20px;
     }
 
@@ -53,22 +53,22 @@
     }
 
     .correct {
-      background-color: #a5d6a7 !important;
+      background-color: #c8e6c9 !important;
     }
 
     .incorrect {
-      background-color: #ef9a9a !important;
+      background-color: #ffcdd2 !important;
     }
 
     .score {
       font-size: 22px;
-      color: #00796b;
+      color: #2e7d32;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Hi Vaneska! Let's practice!</h1>
+    <h1>Hi Vaneska! Let's practice "There is / There are"</h1>
     <div id="quiz">
       <div class="question" id="question">Loading question...</div>
       <button class="option" onclick="selectOption(this)" id="opt0"></button>
@@ -80,56 +80,16 @@
 
   <script>
     const questions = [
-      {
-        question: "The book is ___ the table.",
-        options: ["in", "at", "on"],
-        correct: 2
-      },
-      {
-        question: "She is ___ the kitchen.",
-        options: ["in", "on", "at"],
-        correct: 0
-      },
-      {
-        question: "We are ___ school now.",
-        options: ["on", "at", "in"],
-        correct: 1
-      },
-      {
-        question: "The ball is ___ the box.",
-        options: ["on", "in", "at"],
-        correct: 1
-      },
-      {
-        question: "He is ___ the bus stop.",
-        options: ["at", "in", "on"],
-        correct: 0
-      },
-      {
-        question: "There is a pen ___ my desk.",
-        options: ["on", "in", "at"],
-        correct: 0
-      },
-      {
-        question: "She is sitting ___ the sofa.",
-        options: ["in", "on", "at"],
-        correct: 1
-      },
-      {
-        question: "He lives ___ Brazil.",
-        options: ["on", "in", "at"],
-        correct: 1
-      },
-      {
-        question: "We met ___ the park.",
-        options: ["in", "on", "at"],
-        correct: 2
-      },
-      {
-        question: "My phone is ___ my bag.",
-        options: ["at", "in", "on"],
-        correct: 1
-      }
+      { question: "___ a supermarket near my house.", options: ["There are", "There is", "Is there"], correct: 1 },
+      { question: "___ many restaurants in this area.", options: ["There is", "Are there", "There are"], correct: 2 },
+      { question: "___ a library next to the museum?", options: ["Are there", "Is there", "There are"], correct: 1 },
+      { question: "There ___ a large park behind the hotel.", options: ["is", "are", "be"], correct: 0 },
+      { question: "There ___ any chairs in the room.", options: ["isn't", "aren’t", "doesn't"], correct: 1 },
+      { question: "___ any good cafés around here?", options: ["Is there", "There is", "Are there"], correct: 2 },
+      { question: "There ___ a beautiful painting on the wall.", options: ["is", "are", "has"], correct: 0 },
+      { question: "There ___ three students in the classroom.", options: ["is", "are", "was"], correct: 1 },
+      { question: "___ a problem with the internet connection?", options: ["Are there", "Is there", "There are"], correct: 1 },
+      { question: "There ___ no milk in the fridge.", options: ["is", "are", "isn't"], correct: 2 }
     ];
 
     let current = 0;
@@ -170,7 +130,7 @@
         } else {
           document.getElementById("quiz").style.display = "none";
           document.getElementById("score").style.display = "block";
-          document.getElementById("score").textContent = `You got ${score} out of ${questions.length} correct!`;
+          document.getElementById("score").textContent = `Vaneska, you got ${score} out of ${questions.length} correct! 🎉`;
         }
       }, 2000);
     }
