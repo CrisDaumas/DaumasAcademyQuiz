@@ -8,7 +8,7 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #e8f5e9;
+      background: #fff8e1;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -27,7 +27,7 @@
     }
 
     h1 {
-      color: #2e7d32;
+      color: #ef6c00;
       margin-bottom: 20px;
     }
 
@@ -68,7 +68,7 @@
 </head>
 <body>
   <div class="container">
-    <h1>Hi Jaqueline! Let's practice "There is / There are"</h1>
+    <h1>Hi Jaqueline! Let's practice Simple Present vs Present Continuous!</h1>
     <div id="quiz">
       <div class="question" id="question">Loading question...</div>
       <button class="option" onclick="selectOption(this)" id="opt0"></button>
@@ -80,16 +80,18 @@
 
   <script>
     const questions = [
-      { question: "___ a supermarket near my house.", options: ["There are", "There is", "Is there"], correct: 1 },
-      { question: "___ many restaurants in this area.", options: ["There is", "Are there", "There are"], correct: 2 },
-      { question: "___ a library next to the museum?", options: ["Are there", "Is there", "There are"], correct: 1 },
-      { question: "There ___ a large park behind the hotel.", options: ["is", "are", "be"], correct: 0 },
-      { question: "There ___ any chairs in the room.", options: ["isn't", "aren’t", "doesn't"], correct: 1 },
-      { question: "___ any good cafés around here?", options: ["Is there", "There is", "Are there"], correct: 2 },
-      { question: "There ___ a beautiful painting on the wall.", options: ["is", "are", "has"], correct: 0 },
-      { question: "There ___ three students in the classroom.", options: ["is", "are", "was"], correct: 1 },
-      { question: "___ a problem with the internet connection?", options: ["Are there", "Is there", "There are"], correct: 1 },
-      { question: "There ___ no milk in the fridge.", options: ["is", "are", "isn't"], correct: 2 }
+      { question: "I ___ dinner at the moment.", options: ["eat", "am eating", "eats"], correct: 1 },
+      { question: "He usually ___ to work by bike.", options: ["go", "is going", "goes"], correct: 2 },
+      { question: "They ___ a movie right now.", options: ["watch", "are watching", "watches"], correct: 1 },
+      { question: "My sister ___ in a bank.", options: ["is working", "work", "works"], correct: 2 },
+      { question: "___ your parents live in São Paulo?", options: ["Do", "Are", "Does"], correct: 0 },
+      { question: "We ___ to the radio every morning.", options: ["listen", "are listening", "listens"], correct: 0 },
+      { question: "Look! The cat ___ on the sofa.", options: ["sleeps", "is sleeping", "sleep"], correct: 1 },
+      { question: "She ___ lunch with her friend now.", options: ["has", "have", "is having"], correct: 2 },
+      { question: "___ he working today?", options: ["Is", "Does", "Do"], correct: 0 },
+      { question: "I always ___ my homework after dinner.", options: ["am doing", "does", "do"], correct: 2 },
+      { question: "Right now, they ___ for the bus.", options: ["wait", "are waiting", "waiting"], correct: 1 },
+      { question: "My brother ___ football on Sundays.", options: ["plays", "is playing", "play"], correct: 0 }
     ];
 
     let current = 0;
