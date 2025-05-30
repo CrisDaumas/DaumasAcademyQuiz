@@ -17,13 +17,14 @@
     }
 
     .container {
-      background: #ffffff;
-      border-radius: 15px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
       padding: 30px;
       max-width: 600px;
       width: 90%;
       text-align: center;
+      transition: all 0.3s ease;
     }
 
     h1 {
@@ -63,12 +64,29 @@
     .score {
       font-size: 22px;
       color: #2e7d32;
+      margin-top: 20px;
+    }
+
+    .progress {
+      height: 10px;
+      background: #c8e6c9;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .bar {
+      height: 100%;
+      width: 0%;
+      background: #2e7d32;
+      transition: width 0.4s ease;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Hi Vaneska! Let's practice "There is / There are"</h1>
+    <h1>Hello Vaneska! Let's practice!</h1>
+    <div class="progress"><div class="bar" id="bar"></div></div>
     <div id="quiz">
       <div class="question" id="question">Loading question...</div>
       <button class="option" onclick="selectOption(this)" id="opt0"></button>
@@ -80,16 +98,21 @@
 
   <script>
     const questions = [
-      { question: "___ a supermarket near my house.", options: ["There are", "There is", "Is there"], correct: 1 },
-      { question: "___ many restaurants in this area.", options: ["There is", "Are there", "There are"], correct: 2 },
-      { question: "___ a library next to the museum?", options: ["Are there", "Is there", "There are"], correct: 1 },
-      { question: "There ___ a large park behind the hotel.", options: ["is", "are", "be"], correct: 0 },
-      { question: "There ___ any chairs in the room.", options: ["isn't", "aren’t", "doesn't"], correct: 1 },
-      { question: "___ any good cafés around here?", options: ["Is there", "There is", "Are there"], correct: 2 },
-      { question: "There ___ a beautiful painting on the wall.", options: ["is", "are", "has"], correct: 0 },
-      { question: "There ___ three students in the classroom.", options: ["is", "are", "was"], correct: 1 },
-      { question: "___ a problem with the internet connection?", options: ["Are there", "Is there", "There are"], correct: 1 },
-      { question: "There ___ no milk in the fridge.", options: ["is", "are", "isn't"], correct: 2 }
+      { question: "She ___ to school every day.", options: ["go", "goes", "going"], correct: 1 },
+      { question: "They ___ football on Sundays.", options: ["plays", "play", "playing"], correct: 1 },
+      { question: "I ___ my homework yesterday.", options: ["finish", "finished", "finishing"], correct: 1 },
+      { question: "Does he ___ in the morning?", options: ["exercise", "exercises", "exercised"], correct: 0 },
+      { question: "We ___ English last night.", options: ["study", "studies", "studied"], correct: 2 },
+      { question: "He ___ his car every weekend.", options: ["wash", "washes", "washed"], correct: 1 },
+      { question: "You ___ your room yesterday.", options: ["clean", "cleaned", "cleans"], correct: 1 },
+      { question: "They usually ___ breakfast at 7am.", options: ["have", "has", "had"], correct: 0 },
+      { question: "She ___ a movie last night.", options: ["watched", "watch", "watches"], correct: 0 },
+      { question: "Do you ___ coffee in the morning?", options: ["drink", "drinks", "drank"], correct: 0 },
+      { question: "He ___ his homework already.", options: ["finish", "finishes", "finished"], correct: 2 },
+      { question: "She ___ to music now.", options: ["listen", "listens", "listened"], correct: 1 },
+      { question: "We ___ TV yesterday evening.", options: ["watch", "watched", "watches"], correct: 1 },
+      { question: "They ___ English every day.", options: ["studies", "study", "studied"], correct: 1 },
+      { question: "He ___ his room last Saturday.", options: ["cleaned", "cleans", "clean"], correct: 0 }
     ];
 
     let current = 0;
@@ -104,6 +127,8 @@
         btn.className = "option";
         btn.disabled = false;
       });
+
+      document.getElementById("bar").style.width = ((current / questions.length) * 100) + "%";
     }
 
     function selectOption(btn) {
@@ -111,9 +136,9 @@
       const selectedIndex = parseInt(btn.id.slice(-1));
       const correctBtn = document.getElementById("opt" + q.correct);
 
-      document.getElementById("opt0").disabled = true;
-      document.getElementById("opt1").disabled = true;
-      document.getElementById("opt2").disabled = true;
+      for (let i = 0; i < 3; i++) {
+        document.getElementById("opt" + i).disabled = true;
+      }
 
       if (selectedIndex === q.correct) {
         btn.classList.add("correct");
@@ -130,7 +155,8 @@
         } else {
           document.getElementById("quiz").style.display = "none";
           document.getElementById("score").style.display = "block";
-          document.getElementById("score").textContent = `Vaneska, you got ${score} out of ${questions.length} correct! 🎉`;
+          document.getElementById("bar").style.width = "100%";
+          document.getElementById("score").textContent = `Vaneska, you got ${score} out of ${questions.length} correct! 💪`;
         }
       }, 2000);
     }
