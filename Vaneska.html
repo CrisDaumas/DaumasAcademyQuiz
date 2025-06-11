@@ -1,166 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Daumas Academy - Practice (Vaneska)</title>
-  <link rel="icon" href="icon.png" />
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #f9f9f9;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-    }
-
-    .container {
-      background: #fff;
-      padding: 30px;
-      max-width: 600px;
-      width: 90%;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
-      border-radius: 12px;
-      text-align: center;
-    }
-
-    h1 {
-      color: #2e7d32;
-    }
-
-    .question {
-      font-size: 20px;
-      margin: 20px 0;
-    }
-
-    .highlight {
-      font-weight: bold;
-      color: #1565c0;
-    }
-
-    .option {
-      background-color: #eee;
-      border: none;
-      padding: 12px 20px;
-      margin: 10px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      width: 40%;
-      transition: 0.3s ease;
-    }
-
-    .option:hover {
-      background-color: #ddd;
-    }
-
-    .correct {
-      background-color: #c8e6c9 !important;
-    }
-
-    .incorrect {
-      background-color: #ffcdd2 !important;
-    }
-
-    .progress {
-      height: 10px;
-      background: #ddd;
-      border-radius: 5px;
-      overflow: hidden;
-      margin-bottom: 20px;
-    }
-
-    .bar {
-      height: 100%;
-      width: 0%;
-      background: #2e7d32;
-      transition: width 0.3s ease;
-    }
-
-    .score {
-      font-size: 20px;
-      color: #2e7d32;
-      margin-top: 20px;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Daily Lesson</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 1rem;
+  }
+  h2 {
+    text-align: center;
+  }
+  #question {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+  }
+  #options button {
+    display: block;
+    width: 100%;
+    margin: 0.3rem 0;
+    padding: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  .correct {
+    background-color: #4CAF50 !important;
+    color: white;
+  }
+  .incorrect {
+    background-color: #f44336 !important;
+    color: white;
+  }
+  #score {
+    font-weight: bold;
+    font-size: 1.3rem;
+    text-align: center;
+    margin-top: 1rem;
+  }
+  #score.hidden {
+    display: none;
+  }
+  #bar-container {
+    width: 100%;
+    height: 15px;
+    background-color: #ddd;
+    margin-top: 1rem;
+  }
+  #bar {
+    height: 15px;
+    width: 0%;
+    background-color: #4CAF50;
+    transition: width 0.3s;
+  }
+  span.highlight {
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>Hi Vaneska! Let's practice!</h1>
-    <div class="progress"><div class="bar" id="bar"></div></div>
-    <div id="quiz">
-      <div class="question" id="question">Loading...</div>
-      <button class="option" onclick="selectOption(this)" id="opt0">Countable</button>
-      <button class="option" onclick="selectOption(this)" id="opt1">Uncountable</button>
-    </div>
-    <div class="score" id="score" style="display:none;"></div>
-  </div>
 
-  <script>
-    const questions = [
-      { text: "There is some <span class='highlight'>water</span> in the glass.", answer: "Uncountable" },
-      { text: "I bought three <span class='highlight'>apples</span> at the market.", answer: "Countable" },
-      { text: "Can you give me some <span class='highlight'>advice</span>?", answer: "Uncountable" },
-      { text: "She has two <span class='highlight'>brothers</span>.", answer: "Countable" },
-      { text: "We need more <span class='highlight'>flour</span> for the cake.", answer: "Uncountable" },
-      { text: "He ate a lot of <span class='highlight'>rice</span> for lunch.", answer: "Uncountable" },
-      { text: "My <span class='highlight'>friends</span> are coming over tonight.", answer: "Countable" },
-      { text: "Could you buy some <span class='highlight'>milk</span> on your way?", answer: "Uncountable" },
-      { text: "She read many <span class='highlight'>books</span> during the vacation.", answer: "Countable" },
-      { text: "I need a little <span class='highlight'>sugar</span> for my tea.", answer: "Uncountable" },
-      { text: "There were several <span class='highlight'>chairs</span> in the room.", answer: "Countable" },
-      { text: "We drank fresh <span class='highlight'>juice</span> in the morning.", answer: "Uncountable" },
-      { text: "I have two <span class='highlight'>pens</span> in my bag.", answer: "Countable" },
-      { text: "He gave me some useful <span class='highlight'>information</span>.", answer: "Uncountable" },
-      { text: "There are a few <span class='highlight'>oranges</span> in the basket.", answer: "Countable" }
-    ];
+<h2 id="lessonTitle"></h2>
 
-    let current = 0;
-    let score = 0;
+<div id="question"></div>
+<div id="options"></div>
 
-    function loadQuestion() {
-      const q = questions[current];
-      document.getElementById("question").innerHTML = q.text;
-      document.getElementById("opt0").className = "option";
-      document.getElementById("opt1").className = "option";
-      document.getElementById("opt0").disabled = false;
-      document.getElementById("opt1").disabled = false;
-      document.getElementById("bar").style.width = `${(current / questions.length) * 100}%`;
+<div id="bar-container">
+  <div id="bar"></div>
+</div>
+
+<div id="score" class="hidden"></div>
+
+<script>
+  const lessons = [
+    {
+      title: "Sunday: Countable and Uncountable Nouns - Lesson 1",
+      questions: [
+        {text: "I bought three <span class='highlight'>APPLES</span>.", options: ["Countable", "Uncountable"], correct: 0},
+        {text: "There is some <span class='highlight'>MILK</span> in the fridge.", options: ["Countable", "Uncountable"], correct: 1},
+        {text: "She has two <span class='highlight'>BOOKS</span>.", options: ["Countable", "Uncountable"], correct: 0},
+        {text: "He drank some <span class='highlight'>WATER</span>.", options: ["Countable", "Uncountable"], correct: 1},
+        {text: "They found five <span class='highlight'>PENS</span>.", options: ["Countable", "Uncountable"], correct: 0},
+        {text: "We need some <span class='highlight'>SUGAR</span>.", options: ["Countable", "Uncountable"], correct: 1}
+      ]
+    },
+    {
+      title: "Monday: Countable and Uncountable Nouns - Lesson 2",
+      questions: [
+        {text: "She has a few <span class='highlight'>CATS</span>.", options: ["Countable", "Uncountable"], correct: 0},
+        {text: "He put some <span class='highlight'>RICE</span> on the plate.", options: ["Countable", "Uncountable"], correct: 1},
+        {text: "There are two <span class='highlight'>CHAIRS</span> in the room.", options: ["Countable", "Uncountable"], correct: 0},
+        {text: "We need some <span class='highlight'>BREAD</span> for breakfast.", options: ["Countable", "Uncountable"], correct: 1},
+        {text: "She bought several <span class='highlight'>ORANGES</span>.", options: ["Countable", "Uncountable"], correct: 0},
+        {text: "He added some <span class='highlight'>BUTTER</span> to the recipe.", options: ["Countable", "Uncountable"], correct: 1}
+      ]
+    },
+    {
+      title: "Tuesday: Countable and Uncountable Nouns - Lesson 3",
+      questions: [
+        {text: "They saw four <span class='highlight'>CARS</span>.", options: ["Countable", "Uncountable"], correct: 0},
+        {text: "There is some <span class='highlight'>CHEESE</span> on the table.", options: ["Countable", "Uncountable"], correct: 1},
+        {text: "She has many <span class='highlight'>FRUITS</span> in the basket.", options: ["Countable", "Uncountable"], correct: 0},
+        {text: "We drank some <span class='highlight'>JUICE</span>.", options: ["Countable", "Uncountable"], correct: 1},
+        {text: "He collected several <span class='highlight'>COINS</span>.", options: ["Countable", "Uncountable"], correct: 0},
+        {text: "There is some <span class='highlight'>FLOUR</span> for baking.", options: ["Countable", "Uncountable"], correct: 1}
+      ]
+    },
+    {
+      title: "Wednesday: Countable and Uncountable Nouns - Lesson 4",
+      questions: [
+        {text: "She has two <span class='highlight'>BAGS</span>.", options: ["Countable", "Uncountable"], correct: 0},
+        {text: "There is some <span class='highlight'>COFFEE</span> in the cup.", options: ["Countable", "Uncountable"], correct: 1},
+        {text: "They bought four <span class='highlight'>TOMATOES</span>.", options: ["Countable", "Uncountable"], correct: 0},
+        {text: "He added some <span class='highlight'>SALT</span> to the food.", options: ["Countable", "Uncountable"], correct: 1},
+        {text: "I saw many <span class='highlight'>BIRDS</span> in the sky.", options: ["Countable", "Uncountable"], correct: 0},
+        {text: "There is some <span class='highlight'>HONEY</span> in the jar.", options: ["Countable", "Uncountable"], correct: 1}
+      ]
+    },
+    {
+      title: "Thursday: Countable and Uncountable Nouns - Lesson 5",
+      questions: [
+        {text: "He has three <span class='highlight'>BALLS</span>.", options: ["Countable", "Uncountable"], correct: 0},
+        {text: "There is some <span class='highlight'>OIL</span> in the bottle.", options: ["Countable", "Uncountable"], correct: 1},
+        {text: "She found five <span class='highlight'>STONES</span>.", options: ["Countable", "Uncountable"], correct: 0},
+        {text: "We need some <span class='highlight'>BUTTER</span> for cooking.", options: ["Countable", "Uncountable"], correct: 1},
+        {text: "They bought many <span class='highlight'>PENCILS</span>.", options: ["Countable", "Uncountable"], correct: 0},
+        {text: "He poured some <span class='highlight'>WINE</span> into the glass.", options: ["Countable", "Uncountable"], correct: 1}
+      ]
+    },
+    {
+      title: "Friday: Countable and Uncountable Nouns - Lesson 6",
+      questions: [
+        {text: "She owns two <span class='highlight'>CATS</span>.", options: ["Countable", "Uncountable"], correct: 0},
+        {text: "There is some <span class='highlight'>RICE</span> in the bowl.", options: ["Countable", "Uncountable"], correct: 1},
+        {text: "He has four <span class='highlight'>CHAIRS</span>.", options: ["Countable", "Uncountable"], correct: 0},
+        {text: "We need some <span class='highlight'>FLOUR</span> for bread.", options: ["Countable", "Uncountable"], correct: 1},
+        {text: "They bought several <span class='highlight'>APPLES</span>.", options: ["Countable", "Uncountable"], correct: 0},
+        {text: "He added some <span class='highlight'>SUGAR</span> to his coffee.", options: ["Countable", "Uncountable"], correct: 1}
+      ]
+    },
+    {
+      title: "Saturday: Countable and Uncountable Nouns - Lesson 7",
+      questions: [
+        {text: "She has many <span class='highlight'>BOOKS</span>.", options: ["Countable", "Uncountable"], correct: 0},
+        {text: "There is some <span class='highlight'>JUICE</span> on the table.", options: ["Countable", "Uncountable"], correct: 1},
+        {text: "He owns three <span class='highlight'>DOGS</span>.", options: ["Countable", "Uncountable"], correct: 0},
+        {text: "We bought some <span class='highlight'>BREAD</span> this morning.", options: ["Countable", "Uncountable"], correct: 1},
+        {text: "They have four <span class='highlight'>PENS</span>.", options: ["Countable", "Uncountable"], correct: 0},
+        {text: "There is some <span class='highlight'>MILK</span> in the glass.", options: ["Countable", "Uncountable"], correct: 1}
+      ]
     }
+  ];
 
-    function selectOption(btn) {
-      const answer = btn.innerText;
-      const correct = questions[current].answer;
-      const opt0 = document.getElementById("opt0");
-      const opt1 = document.getElementById("opt1");
+  let currentLessonIndex = new Date().getDay();
 
-      opt0.disabled = true;
-      opt1.disabled = true;
+  const lessonTitle = document.getElementById("lessonTitle");
+  const questionEl = document.getElementById("question");
+  const optionsEl = document.getElementById("options");
+  const barEl = document.getElementById("bar");
+  const scoreEl = document.getElementById("score");
 
-      if (answer === correct) {
-        btn.classList.add("correct");
-        score++;
-      } else {
-        btn.classList.add("incorrect");
-        (correct === "Countable" ? opt0 : opt1).classList.add("correct");
-      }
+  let currentIndex = 0;
+  let score = 0;
+  let acceptingAnswers = true;
 
-      setTimeout(() => {
-        current++;
-        if (current < questions.length) {
-          loadQuestion();
-        } else {
-          document.getElementById("quiz").style.display = "none";
-          document.getElementById("score").style.display = "block";
-          document.getElementById("score").textContent = `Vaneska, you got ${score} out of ${questions.length} correct! 👏`;
-          document.getElementById("bar").style.width = `100%`;
-        }
-      }, 2000);
+  function loadQuestion() {
+    acceptingAnswers = true;
+    const lesson = lessons[currentLessonIndex];
+    const q = lesson.questions[currentIndex];
+    lessonTitle.textContent = lesson.title;
+    questionEl.innerHTML = q.text;
+    optionsEl.innerHTML = "";
+    scoreEl.classList.add("hidden");
+    barEl.style.width = `${(currentIndex / lesson.questions.length) * 100}%`;
+
+    q.options.forEach((opt, i) => {
+      const button = document.createElement("button");
+      button.className = "option";
+      button.textContent = opt;
+      button.onclick = () => selectOption(i);
+      optionsEl.appendChild(button);
+    });
+  }
+
+  function selectOption(selected) {
+    if (!acceptingAnswers) return;
+    acceptingAnswers = false;
+
+    const lesson = lessons[currentLessonIndex];
+    const q = lesson.questions[currentIndex];
+    const buttons = optionsEl.querySelectorAll("button");
+
+    buttons.forEach((btn, i) => {
+      btn.disabled = true;
+      if (i === q.correct) btn.classList.add("correct");
+      if (i === selected && selected !== q.correct) btn.classList.add("incorrect");
+    });
+
+    if (selected === q.correct) score++;
+
+    currentIndex++;
+    barEl.style.width = `${(currentIndex / lesson.questions.length) * 100}%`;
+
+    if (currentIndex < lesson.questions.length) {
+      setTimeout(loadQuestion, 2000);
+    } else {
+      setTimeout(showScore, 2000);
     }
+  }
 
+  function showScore() {
+    questionEl.textContent = "";
+    optionsEl.innerHTML = "";
+    scoreEl.textContent = `You scored ${score} out of ${lessons[currentLessonIndex].questions.length}!`;
+    scoreEl.classList.remove("hidden");
+    barEl.style.width = "100%";
+  }
+
+  // Debug mode key handler (always enabled)
+  window.addEventListener("keydown", (e) => {
+    if (e.code === "NumpadAdd") {
+      currentLessonIndex = (currentLessonIndex + 1) % lessons.length;
+      resetLesson();
+    }
+    else if (e.code === "NumpadSubtract") {
+      currentLessonIndex = (currentLessonIndex - 1 + lessons.length) % lessons.length;
+      resetLesson();
+    }
+  });
+
+  function resetLesson() {
+    currentIndex = 0;
+    score = 0;
+    scoreEl.classList.add("hidden");
+    barEl.style.width = "0%";
     loadQuestion();
-  </script>
+  }
+
+  loadQuestion();
+
+</script>
+
 </body>
 </html>
