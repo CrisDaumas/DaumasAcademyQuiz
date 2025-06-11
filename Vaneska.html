@@ -5,60 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Daily Lesson</title>
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    max-width: 600px;
-    margin: 2rem auto;
-    padding: 1rem;
-  }
-  h2 {
-    text-align: center;
-  }
-  #question {
-    font-size: 1.2rem;
-    margin: 1rem 0;
-  }
-  #options button {
-    display: block;
-    width: 100%;
-    margin: 0.3rem 0;
-    padding: 0.5rem;
-    font-size: 1rem;
-    cursor: pointer;
-  }
-  .correct {
-    background-color: #4CAF50 !important;
-    color: white;
-  }
-  .incorrect {
-    background-color: #f44336 !important;
-    color: white;
-  }
-  #score {
-    font-weight: bold;
-    font-size: 1.3rem;
-    text-align: center;
-    margin-top: 1rem;
-  }
-  #score.hidden {
-    display: none;
-  }
-  #bar-container {
-    width: 100%;
-    height: 15px;
-    background-color: #ddd;
-    margin-top: 1rem;
-  }
-  #bar {
-    height: 15px;
-    width: 0%;
-    background-color: #4CAF50;
-    transition: width 0.3s;
-  }
-  span.highlight {
-    font-weight: bold;
-    text-transform: uppercase;
-  }
+  body { font-family: Arial, sans-serif; max-width: 600px; margin: 2rem auto; padding: 1rem; }
+  h2 { text-align: center; }
+  #question { font-size: 1.2rem; margin: 1rem 0; }
+  #options button { display: block; width: 100%; margin: 0.3rem 0; padding: 0.5rem; font-size: 1rem; cursor: pointer; }
+  .correct { background-color: #4CAF50 !important; color: white; }
+  .incorrect { background-color: #f44336 !important; color: white; }
+  #score { font-weight: bold; font-size: 1.3rem; text-align: center; margin-top: 1rem; }
+  #score.hidden { display: none; }
+  #bar-container { width: 100%; height: 15px; background-color: #ddd; margin-top: 1rem; }
+  #bar { height: 15px; width: 0%; background-color: #4CAF50; transition: width 0.3s; }
+  span.highlight { font-weight: bold; text-transform: uppercase; }
 </style>
 </head>
 <body>
@@ -68,180 +25,152 @@
 <div id="question"></div>
 <div id="options"></div>
 
-<div id="bar-container">
-  <div id="bar"></div>
-</div>
+<div id="bar-container"><div id="bar"></div></div>
 
 <div id="score" class="hidden"></div>
 
 <script>
-  const lessons = [
-    {
-      title: "Sunday: Countable and Uncountable Nouns - Lesson 1",
-      questions: [
-        {text: "I bought three <span class='highlight'>APPLES</span>.", options: ["Countable", "Uncountable"], correct: 0},
-        {text: "There is some <span class='highlight'>MILK</span> in the fridge.", options: ["Countable", "Uncountable"], correct: 1},
-        {text: "She has two <span class='highlight'>BOOKS</span>.", options: ["Countable", "Uncountable"], correct: 0},
-        {text: "He drank some <span class='highlight'>WATER</span>.", options: ["Countable", "Uncountable"], correct: 1},
-        {text: "They found five <span class='highlight'>PENS</span>.", options: ["Countable", "Uncountable"], correct: 0},
-        {text: "We need some <span class='highlight'>SUGAR</span>.", options: ["Countable", "Uncountable"], correct: 1}
-      ]
-    },
-    {
-      title: "Monday: Countable and Uncountable Nouns - Lesson 2",
-      questions: [
-        {text: "She has a few <span class='highlight'>CATS</span>.", options: ["Countable", "Uncountable"], correct: 0},
-        {text: "He put some <span class='highlight'>RICE</span> on the plate.", options: ["Countable", "Uncountable"], correct: 1},
-        {text: "There are two <span class='highlight'>CHAIRS</span> in the room.", options: ["Countable", "Uncountable"], correct: 0},
-        {text: "We need some <span class='highlight'>BREAD</span> for breakfast.", options: ["Countable", "Uncountable"], correct: 1},
-        {text: "She bought several <span class='highlight'>ORANGES</span>.", options: ["Countable", "Uncountable"], correct: 0},
-        {text: "He added some <span class='highlight'>BUTTER</span> to the recipe.", options: ["Countable", "Uncountable"], correct: 1}
-      ]
-    },
-    {
-      title: "Tuesday: Countable and Uncountable Nouns - Lesson 3",
-      questions: [
-        {text: "They saw four <span class='highlight'>CARS</span>.", options: ["Countable", "Uncountable"], correct: 0},
-        {text: "There is some <span class='highlight'>CHEESE</span> on the table.", options: ["Countable", "Uncountable"], correct: 1},
-        {text: "She has many <span class='highlight'>FRUITS</span> in the basket.", options: ["Countable", "Uncountable"], correct: 0},
-        {text: "We drank some <span class='highlight'>JUICE</span>.", options: ["Countable", "Uncountable"], correct: 1},
-        {text: "He collected several <span class='highlight'>COINS</span>.", options: ["Countable", "Uncountable"], correct: 0},
-        {text: "There is some <span class='highlight'>FLOUR</span> for baking.", options: ["Countable", "Uncountable"], correct: 1}
-      ]
-    },
-    {
-      title: "Wednesday: Countable and Uncountable Nouns - Lesson 4",
-      questions: [
-        {text: "She has two <span class='highlight'>BAGS</span>.", options: ["Countable", "Uncountable"], correct: 0},
-        {text: "There is some <span class='highlight'>COFFEE</span> in the cup.", options: ["Countable", "Uncountable"], correct: 1},
-        {text: "They bought four <span class='highlight'>TOMATOES</span>.", options: ["Countable", "Uncountable"], correct: 0},
-        {text: "He added some <span class='highlight'>SALT</span> to the food.", options: ["Countable", "Uncountable"], correct: 1},
-        {text: "I saw many <span class='highlight'>BIRDS</span> in the sky.", options: ["Countable", "Uncountable"], correct: 0},
-        {text: "There is some <span class='highlight'>HONEY</span> in the jar.", options: ["Countable", "Uncountable"], correct: 1}
-      ]
-    },
-    {
-      title: "Thursday: Countable and Uncountable Nouns - Lesson 5",
-      questions: [
-        {text: "He has three <span class='highlight'>BALLS</span>.", options: ["Countable", "Uncountable"], correct: 0},
-        {text: "There is some <span class='highlight'>OIL</span> in the bottle.", options: ["Countable", "Uncountable"], correct: 1},
-        {text: "She found five <span class='highlight'>STONES</span>.", options: ["Countable", "Uncountable"], correct: 0},
-        {text: "We need some <span class='highlight'>BUTTER</span> for cooking.", options: ["Countable", "Uncountable"], correct: 1},
-        {text: "They bought many <span class='highlight'>PENCILS</span>.", options: ["Countable", "Uncountable"], correct: 0},
-        {text: "He poured some <span class='highlight'>WINE</span> into the glass.", options: ["Countable", "Uncountable"], correct: 1}
-      ]
-    },
-    {
-      title: "Friday: Countable and Uncountable Nouns - Lesson 6",
-      questions: [
-        {text: "She owns two <span class='highlight'>CATS</span>.", options: ["Countable", "Uncountable"], correct: 0},
-        {text: "There is some <span class='highlight'>RICE</span> in the bowl.", options: ["Countable", "Uncountable"], correct: 1},
-        {text: "He has four <span class='highlight'>CHAIRS</span>.", options: ["Countable", "Uncountable"], correct: 0},
-        {text: "We need some <span class='highlight'>FLOUR</span> for bread.", options: ["Countable", "Uncountable"], correct: 1},
-        {text: "They bought several <span class='highlight'>APPLES</span>.", options: ["Countable", "Uncountable"], correct: 0},
-        {text: "He added some <span class='highlight'>SUGAR</span> to his coffee.", options: ["Countable", "Uncountable"], correct: 1}
-      ]
-    },
-    {
-      title: "Saturday: Countable and Uncountable Nouns - Lesson 7",
-      questions: [
-        {text: "She has many <span class='highlight'>BOOKS</span>.", options: ["Countable", "Uncountable"], correct: 0},
-        {text: "There is some <span class='highlight'>JUICE</span> on the table.", options: ["Countable", "Uncountable"], correct: 1},
-        {text: "He owns three <span class='highlight'>DOGS</span>.", options: ["Countable", "Uncountable"], correct: 0},
-        {text: "We bought some <span class='highlight'>BREAD</span> this morning.", options: ["Countable", "Uncountable"], correct: 1},
-        {text: "They have four <span class='highlight'>PENS</span>.", options: ["Countable", "Uncountable"], correct: 0},
-        {text: "There is some <span class='highlight'>MILK</span> in the glass.", options: ["Countable", "Uncountable"], correct: 1}
-      ]
-    }
-  ];
+const lessons = [
+  { title: "Sunday: Demonstratives - Lesson 1", questions: [
+    {text: "______ is my book on the table.", options: ["This", "That", "These", "Those"], correct: 0},
+    {text: "Look at ______ stars in the sky.", options: ["This", "That", "These", "Those"], correct: 3},
+    {text: "______ apple is delicious.", options: ["This", "That", "These", "Those"], correct: 0},
+    {text: "Can you see ______ bird over there?", options: ["This", "That", "These", "Those"], correct: 1},
+    {text: "______ are my friends from school.", options: ["This", "That", "These", "Those"], correct: 2},
+    {text: "I don't like ______ shoes you are wearing.", options: ["This", "That", "These", "Those"], correct: 3}
+  ]},
+  { title: "Monday: Demonstratives - Lesson 2", questions: [
+    {text: "______ is my mother next to me.", options: ["This", "That", "These", "Those"], correct: 0},
+    {text: "Who are ______ people over there?", options: ["This", "That", "These", "Those"], correct: 3},
+    {text: "Do you see ______ mountain far away?", options: ["This", "That", "These", "Those"], correct: 1},
+    {text: "______ are beautiful flowers.", options: ["This", "That", "These", "Those"], correct: 2},
+    {text: "I don't like ______ color on the wall.", options: ["This", "That", "These", "Those"], correct: 1},
+    {text: "______ is my cup on the table.", options: ["This", "That", "These", "Those"], correct: 0}
+  ]},
+  { title: "Tuesday: Demonstratives - Lesson 3", questions: [
+    {text: "______ are my favorite shoes.", options: ["This", "That", "These", "Those"], correct: 2},
+    {text: "Can you bring me ______ pen near you?", options: ["This", "That", "These", "Those"], correct: 0},
+    {text: "Look at ______ airplane in the sky.", options: ["This", "That", "These", "Those"], correct: 1},
+    {text: "I love ______ cookies you baked.", options: ["This", "That", "These", "Those"], correct: 2},
+    {text: "______ is my new phone.", options: ["This", "That", "These", "Those"], correct: 0},
+    {text: "I don’t want ______ books on the shelf.", options: ["This", "That", "These", "Those"], correct: 3}
+  ]},
+  { title: "Wednesday: Demonstratives - Lesson 4", questions: [
+    {text: "______ are my classmates.", options: ["This", "That", "These", "Those"], correct: 2},
+    {text: "Please take ______ jacket there.", options: ["This", "That", "These", "Those"], correct: 1},
+    {text: "______ is my brother next to me.", options: ["This", "That", "These", "Those"], correct: 0},
+    {text: "Who are ______ people at the door?", options: ["This", "That", "These", "Those"], correct: 3},
+    {text: "I don’t like ______ food from yesterday.", options: ["This", "That", "These", "Those"], correct: 1},
+    {text: "______ are my new shoes.", options: ["This", "That", "These", "Those"], correct: 2}
+  ]},
+  { title: "Thursday: Demonstratives - Lesson 5", questions: [
+    {text: "Can you see ______ house over there?", options: ["This", "That", "These", "Those"], correct: 1},
+    {text: "______ is my cat sitting next to me.", options: ["This", "That", "These", "Those"], correct: 0},
+    {text: "______ are the cookies I made.", options: ["This", "That", "These", "Those"], correct: 2},
+    {text: "I don't like ______ movies you watch.", options: ["This", "That", "These", "Those"], correct: 3},
+    {text: "______ chair is very comfortable.", options: ["This", "That", "These", "Those"], correct: 0},
+    {text: "Look at ______ tall building far away.", options: ["This", "That", "These", "Those"], correct: 1}
+  ]},
+  { title: "Friday: Demonstratives - Lesson 6", questions: [
+    {text: "______ are my grandparents.", options: ["This", "That", "These", "Those"], correct: 2},
+    {text: "______ is my new car.", options: ["This", "That", "These", "Those"], correct: 0},
+    {text: "Who are ______ men over there?", options: ["This", "That", "These", "Those"], correct: 3},
+    {text: "______ hat is very nice.", options: ["This", "That", "These", "Those"], correct: 0},
+    {text: "Look at ______ boat in the distance.", options: ["This", "That", "These", "Those"], correct: 1},
+    {text: "I like ______ apples on the table.", options: ["This", "That", "These", "Those"], correct: 2}
+  ]},
+  { title: "Saturday: Demonstratives - Lesson 7", questions: [
+    {text: "______ is my teacher here.", options: ["This", "That", "These", "Those"], correct: 0},
+    {text: "______ are the chairs I bought.", options: ["This", "That", "These", "Those"], correct: 2},
+    {text: "Please look at ______ mountain far away.", options: ["This", "That", "These", "Those"], correct: 1},
+    {text: "Who are ______ boys near the window?", options: ["This", "That", "These", "Those"], correct: 3},
+    {text: "______ jacket belongs to me.", options: ["This", "That", "These", "Those"], correct: 0},
+    {text: "I don’t like ______ shoes you're wearing.", options: ["This", "That", "These", "Those"], correct: 3}
+  ]}
+];
 
-  let currentLessonIndex = new Date().getDay();
+let currentLessonIndex = new Date().getDay();
+const lessonTitle = document.getElementById("lessonTitle");
+const questionEl = document.getElementById("question");
+const optionsEl = document.getElementById("options");
+const barEl = document.getElementById("bar");
+const scoreEl = document.getElementById("score");
+let currentIndex = 0;
+let score = 0;
+let acceptingAnswers = true;
 
-  const lessonTitle = document.getElementById("lessonTitle");
-  const questionEl = document.getElementById("question");
-  const optionsEl = document.getElementById("options");
-  const barEl = document.getElementById("bar");
-  const scoreEl = document.getElementById("score");
+function loadQuestion() {
+  acceptingAnswers = true;
+  const lesson = lessons[currentLessonIndex];
+  const q = lesson.questions[currentIndex];
+  lessonTitle.textContent = lesson.title;
+  questionEl.innerHTML = q.text;
+  optionsEl.innerHTML = "";
+  scoreEl.classList.add("hidden");
+  barEl.style.width = `${(currentIndex / lesson.questions.length) * 100}%`;
 
-  let currentIndex = 0;
-  let score = 0;
-  let acceptingAnswers = true;
+  q.options.forEach((opt, i) => {
+    const button = document.createElement("button");
+    button.className = "option";
+    button.textContent = opt;
+    button.onclick = () => selectOption(i);
+    optionsEl.appendChild(button);
+  });
+}
 
-  function loadQuestion() {
-    acceptingAnswers = true;
-    const lesson = lessons[currentLessonIndex];
-    const q = lesson.questions[currentIndex];
-    lessonTitle.textContent = lesson.title;
-    questionEl.innerHTML = q.text;
-    optionsEl.innerHTML = "";
-    scoreEl.classList.add("hidden");
-    barEl.style.width = `${(currentIndex / lesson.questions.length) * 100}%`;
+function selectOption(selected) {
+  if (!acceptingAnswers) return;
+  acceptingAnswers = false;
 
-    q.options.forEach((opt, i) => {
-      const button = document.createElement("button");
-      button.className = "option";
-      button.textContent = opt;
-      button.onclick = () => selectOption(i);
-      optionsEl.appendChild(button);
-    });
-  }
+  const lesson = lessons[currentLessonIndex];
+  const q = lesson.questions[currentIndex];
+  const buttons = optionsEl.querySelectorAll("button");
 
-  function selectOption(selected) {
-    if (!acceptingAnswers) return;
-    acceptingAnswers = false;
-
-    const lesson = lessons[currentLessonIndex];
-    const q = lesson.questions[currentIndex];
-    const buttons = optionsEl.querySelectorAll("button");
-
-    buttons.forEach((btn, i) => {
-      btn.disabled = true;
-      if (i === q.correct) btn.classList.add("correct");
-      if (i === selected && selected !== q.correct) btn.classList.add("incorrect");
-    });
-
-    if (selected === q.correct) score++;
-
-    currentIndex++;
-    barEl.style.width = `${(currentIndex / lesson.questions.length) * 100}%`;
-
-    if (currentIndex < lesson.questions.length) {
-      setTimeout(loadQuestion, 2000);
-    } else {
-      setTimeout(showScore, 2000);
-    }
-  }
-
-  function showScore() {
-    questionEl.textContent = "";
-    optionsEl.innerHTML = "";
-    scoreEl.textContent = `You scored ${score} out of ${lessons[currentLessonIndex].questions.length}!`;
-    scoreEl.classList.remove("hidden");
-    barEl.style.width = "100%";
-  }
-
-  // Debug mode key handler (always enabled)
-  window.addEventListener("keydown", (e) => {
-    if (e.code === "NumpadAdd") {
-      currentLessonIndex = (currentLessonIndex + 1) % lessons.length;
-      resetLesson();
-    }
-    else if (e.code === "NumpadSubtract") {
-      currentLessonIndex = (currentLessonIndex - 1 + lessons.length) % lessons.length;
-      resetLesson();
-    }
+  buttons.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.correct) btn.classList.add("correct");
+    if (i === selected && selected !== q.correct) btn.classList.add("incorrect");
   });
 
-  function resetLesson() {
-    currentIndex = 0;
-    score = 0;
-    scoreEl.classList.add("hidden");
-    barEl.style.width = "0%";
-    loadQuestion();
+  if (selected === q.correct) score++;
+
+  currentIndex++;
+  barEl.style.width = `${(currentIndex / lesson.questions.length) * 100}%`;
+
+  if (currentIndex < lesson.questions.length) {
+    setTimeout(loadQuestion, 2000);
+  } else {
+    setTimeout(showScore, 2000);
   }
+}
 
+function showScore() {
+  questionEl.textContent = "";
+  optionsEl.innerHTML = "";
+  scoreEl.textContent = `You scored ${score} out of ${lessons[currentLessonIndex].questions.length}!`;
+  scoreEl.classList.remove("hidden");
+  barEl.style.width = "100%";
+}
+
+window.addEventListener("keydown", (e) => {
+  if (e.code === "NumpadAdd") {
+    currentLessonIndex = (currentLessonIndex + 1) % lessons.length;
+    resetLesson();
+  } else if (e.code === "NumpadSubtract") {
+    currentLessonIndex = (currentLessonIndex - 1 + lessons.length) % lessons.length;
+    resetLesson();
+  }
+});
+
+function resetLesson() {
+  currentIndex = 0;
+  score = 0;
+  scoreEl.classList.add("hidden");
+  barEl.style.width = "0%";
   loadQuestion();
+}
 
+loadQuestion();
 </script>
 
 </body>
