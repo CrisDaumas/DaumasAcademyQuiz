@@ -15,7 +15,6 @@
   #score.hidden { display: none; }
   #bar-container { width: 100%; height: 15px; background-color: #ddd; margin-top: 1rem; }
   #bar { height: 15px; width: 0%; background-color: #4CAF50; transition: width 0.3s; }
-  span.highlight { font-weight: bold; text-transform: uppercase; }
 </style>
 </head>
 <body>
@@ -31,61 +30,61 @@
 
 <script>
 const lessons = [
-  { title: "Sunday: Demonstratives - Lesson 1", questions: [
-    {text: "______ is my book on the table.", options: ["This", "That", "These", "Those"], correct: 0},
-    {text: "Look at ______ stars in the sky.", options: ["This", "That", "These", "Those"], correct: 3},
-    {text: "______ apple is delicious.", options: ["This", "That", "These", "Those"], correct: 0},
-    {text: "Can you see ______ bird over there?", options: ["This", "That", "These", "Those"], correct: 1},
-    {text: "______ are my friends from school.", options: ["This", "That", "These", "Those"], correct: 2},
-    {text: "I don't like ______ shoes you are wearing.", options: ["This", "That", "These", "Those"], correct: 3}
+  { title: "Sunday: Present Continuous - Lesson 1", questions: [
+    {text: "She ______ TV now.", options: ["is watching", "is running", "is reading", "is sleeping"], correct: 0},
+    {text: "We ______ dinner together.", options: ["are having", "are walking", "are listening", "are swimming"], correct: 0},
+    {text: "They ______ soccer in the park.", options: ["are playing", "are driving", "are studying", "are cooking"], correct: 0},
+    {text: "I ______ to music.", options: ["am listening", "am reading", "am swimming", "am dancing"], correct: 0},
+    {text: "He ______ a book.", options: ["is reading", "is cooking", "is running", "is watching"], correct: 0},
+    {text: "The children ______ loudly.", options: ["are singing", "are running", "are playing", "are jumping"], correct: 0}
   ]},
-  { title: "Monday: Demonstratives - Lesson 2", questions: [
-    {text: "______ is my mother next to me.", options: ["This", "That", "These", "Those"], correct: 0},
-    {text: "Who are ______ people over there?", options: ["This", "That", "These", "Those"], correct: 3},
-    {text: "Do you see ______ mountain far away?", options: ["This", "That", "These", "Those"], correct: 1},
-    {text: "______ are beautiful flowers.", options: ["This", "That", "These", "Those"], correct: 2},
-    {text: "I don't like ______ color on the wall.", options: ["This", "That", "These", "Those"], correct: 1},
-    {text: "______ is my cup on the table.", options: ["This", "That", "These", "Those"], correct: 0}
+  { title: "Monday: Present Continuous - Lesson 2", questions: [
+    {text: "You ______ a cake.", options: ["are baking", "are drawing", "are driving", "are reading"], correct: 0},
+    {text: "She ______ her homework now.", options: ["is doing", "is singing", "is dancing", "is painting"], correct: 0},
+    {text: "We ______ for the bus.", options: ["are waiting", "are singing", "are walking", "are writing"], correct: 0},
+    {text: "I ______ a letter.", options: ["am writing", "am driving", "am dancing", "am reading"], correct: 0},
+    {text: "The baby ______ now.", options: ["is sleeping", "is running", "is jumping", "is listening"], correct: 0},
+    {text: "They ______ football.", options: ["are playing", "are painting", "are cooking", "are swimming"], correct: 0}
   ]},
-  { title: "Tuesday: Demonstratives - Lesson 3", questions: [
-    {text: "______ are my favorite shoes.", options: ["This", "That", "These", "Those"], correct: 2},
-    {text: "Can you bring me ______ pen near you?", options: ["This", "That", "These", "Those"], correct: 0},
-    {text: "Look at ______ airplane in the sky.", options: ["This", "That", "These", "Those"], correct: 1},
-    {text: "I love ______ cookies you baked.", options: ["This", "That", "These", "Those"], correct: 2},
-    {text: "______ is my new phone.", options: ["This", "That", "These", "Those"], correct: 0},
-    {text: "I don’t want ______ books on the shelf.", options: ["This", "That", "These", "Those"], correct: 3}
+  { title: "Tuesday: Present Continuous - Lesson 3", questions: [
+    {text: "We ______ to school.", options: ["are walking", "are sleeping", "are jumping", "are cooking"], correct: 0},
+    {text: "She ______ a sandwich.", options: ["is eating", "is singing", "is drawing", "is playing"], correct: 0},
+    {text: "The cat ______ on the sofa.", options: ["is sleeping", "is dancing", "is swimming", "is reading"], correct: 0},
+    {text: "They ______ TV.", options: ["are watching", "are running", "are swimming", "are writing"], correct: 0},
+    {text: "I ______ my room.", options: ["am cleaning", "am writing", "am cooking", "am jumping"], correct: 0},
+    {text: "She ______ the baby.", options: ["is feeding", "is dancing", "is jumping", "is drawing"], correct: 0}
   ]},
-  { title: "Wednesday: Demonstratives - Lesson 4", questions: [
-    {text: "______ are my classmates.", options: ["This", "That", "These", "Those"], correct: 2},
-    {text: "Please take ______ jacket there.", options: ["This", "That", "These", "Those"], correct: 1},
-    {text: "______ is my brother next to me.", options: ["This", "That", "These", "Those"], correct: 0},
-    {text: "Who are ______ people at the door?", options: ["This", "That", "These", "Those"], correct: 3},
-    {text: "I don’t like ______ food from yesterday.", options: ["This", "That", "These", "Those"], correct: 1},
-    {text: "______ are my new shoes.", options: ["This", "That", "These", "Those"], correct: 2}
+  { title: "Wednesday: Present Continuous - Lesson 4", questions: [
+    {text: "You ______ too fast!", options: ["are driving", "are singing", "are swimming", "are cooking"], correct: 0},
+    {text: "He ______ English now.", options: ["is studying", "is running", "is painting", "is baking"], correct: 0},
+    {text: "They ______ the house.", options: ["are painting", "are cooking", "are dancing", "are playing"], correct: 0},
+    {text: "I ______ a new song.", options: ["am learning", "am running", "am writing", "am playing"], correct: 0},
+    {text: "We ______ a new car.", options: ["are buying", "are watching", "are driving", "are drawing"], correct: 0},
+    {text: "The dog ______ outside.", options: ["is barking", "is singing", "is dancing", "is eating"], correct: 0}
   ]},
-  { title: "Thursday: Demonstratives - Lesson 5", questions: [
-    {text: "Can you see ______ house over there?", options: ["This", "That", "These", "Those"], correct: 1},
-    {text: "______ is my cat sitting next to me.", options: ["This", "That", "These", "Those"], correct: 0},
-    {text: "______ are the cookies I made.", options: ["This", "That", "These", "Those"], correct: 2},
-    {text: "I don't like ______ movies you watch.", options: ["This", "That", "These", "Those"], correct: 3},
-    {text: "______ chair is very comfortable.", options: ["This", "That", "These", "Those"], correct: 0},
-    {text: "Look at ______ tall building far away.", options: ["This", "That", "These", "Those"], correct: 1}
+  { title: "Thursday: Present Continuous - Lesson 5", questions: [
+    {text: "She ______ to the teacher.", options: ["is talking", "is jumping", "is cooking", "is swimming"], correct: 0},
+    {text: "They ______ a picnic.", options: ["are having", "are driving", "are writing", "are playing"], correct: 0},
+    {text: "I ______ the dishes.", options: ["am washing", "am cooking", "am running", "am drawing"], correct: 0},
+    {text: "We ______ to music.", options: ["are listening", "are dancing", "are reading", "are jumping"], correct: 0},
+    {text: "He ______ lunch now.", options: ["is eating", "is running", "is swimming", "is painting"], correct: 0},
+    {text: "The kids ______ outside.", options: ["are playing", "are reading", "are cooking", "are jumping"], correct: 0}
   ]},
-  { title: "Friday: Demonstratives - Lesson 6", questions: [
-    {text: "______ are my grandparents.", options: ["This", "That", "These", "Those"], correct: 2},
-    {text: "______ is my new car.", options: ["This", "That", "These", "Those"], correct: 0},
-    {text: "Who are ______ men over there?", options: ["This", "That", "These", "Those"], correct: 3},
-    {text: "______ hat is very nice.", options: ["This", "That", "These", "Those"], correct: 0},
-    {text: "Look at ______ boat in the distance.", options: ["This", "That", "These", "Those"], correct: 1},
-    {text: "I like ______ apples on the table.", options: ["This", "That", "These", "Those"], correct: 2}
+  { title: "Friday: Present Continuous - Lesson 6", questions: [
+    {text: "You ______ too much noise!", options: ["are making", "are swimming", "are reading", "are playing"], correct: 0},
+    {text: "She ______ a story.", options: ["is telling", "is singing", "is painting", "is running"], correct: 0},
+    {text: "They ______ the table.", options: ["are setting", "are baking", "are cooking", "are reading"], correct: 0},
+    {text: "I ______ a message.", options: ["am sending", "am running", "am watching", "am cooking"], correct: 0},
+    {text: "He ______ a joke.", options: ["is telling", "is running", "is painting", "is swimming"], correct: 0},
+    {text: "We ______ for the trip.", options: ["are packing", "are baking", "are drawing", "are watching"], correct: 0}
   ]},
-  { title: "Saturday: Demonstratives - Lesson 7", questions: [
-    {text: "______ is my teacher here.", options: ["This", "That", "These", "Those"], correct: 0},
-    {text: "______ are the chairs I bought.", options: ["This", "That", "These", "Those"], correct: 2},
-    {text: "Please look at ______ mountain far away.", options: ["This", "That", "These", "Those"], correct: 1},
-    {text: "Who are ______ boys near the window?", options: ["This", "That", "These", "Those"], correct: 3},
-    {text: "______ jacket belongs to me.", options: ["This", "That", "These", "Those"], correct: 0},
-    {text: "I don’t like ______ shoes you're wearing.", options: ["This", "That", "These", "Those"], correct: 3}
+  { title: "Saturday: Present Continuous - Lesson 7", questions: [
+    {text: "She ______ a song.", options: ["is singing", "is reading", "is swimming", "is writing"], correct: 0},
+    {text: "I ______ to work.", options: ["am going", "am reading", "am watching", "am playing"], correct: 0},
+    {text: "They ______ the garden.", options: ["are watering", "are baking", "are running", "are cooking"], correct: 0},
+    {text: "We ______ dinner.", options: ["are cooking", "are drawing", "are painting", "are running"], correct: 0},
+    {text: "The baby ______ now.", options: ["is crying", "is reading", "is jumping", "is listening"], correct: 0},
+    {text: "He ______ with friends.", options: ["is talking", "is painting", "is running", "is swimming"], correct: 0}
   ]}
 ];
 
