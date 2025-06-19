@@ -1,90 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Daily Lesson</title>
-<style>
-  body { font-family: Arial, sans-serif; max-width: 600px; margin: 2rem auto; padding: 1rem; }
-  h2 { text-align: center; }
-  #question { font-size: 1.2rem; margin: 1rem 0; }
-  #options button { display: block; width: 100%; margin: 0.3rem 0; padding: 0.5rem; font-size: 1rem; cursor: pointer; }
-  .correct { background-color: #4CAF50 !important; color: white; }
-  .incorrect { background-color: #f44336 !important; color: white; }
-  #score { font-weight: bold; font-size: 1.3rem; text-align: center; margin-top: 1rem; }
-  #score.hidden { display: none; }
-  #bar-container { width: 100%; height: 15px; background-color: #ddd; margin-top: 1rem; }
-  #bar { height: 15px; width: 0%; background-color: #4CAF50; transition: width 0.3s; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Daily Lesson</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 600px; margin: 2rem auto; padding: 1rem; }
+    h2 { text-align: center; }
+    #question { font-size: 1.2rem; margin: 1rem 0; }
+    #options button { display: block; width: 100%; margin: 0.3rem 0; padding: 0.5rem; font-size: 1rem; cursor: pointer; }
+    .correct { background-color: #4CAF50 !important; color: white; }
+    .incorrect { background-color: #f44336 !important; color: white; }
+    #score { font-weight: bold; font-size: 1.3rem; text-align: center; margin-top: 1rem; }
+    #score.hidden { display: none; }
+    #bar-container { width: 100%; height: 15px; background-color: #ddd; margin-top: 1rem; }
+    #bar { height: 15px; width: 0%; background-color: #4CAF50; transition: width 0.3s; }
+  </style>
 </head>
 <body>
 
 <h2 id="lessonTitle"></h2>
-
 <div id="question"></div>
 <div id="options"></div>
-
 <div id="bar-container"><div id="bar"></div></div>
-
 <div id="score" class="hidden"></div>
 
 <script>
 const lessons = [
-  { title: "Sunday: Present Continuous - Lesson 1", questions: [
-    {text: "She ______ TV now.", options: ["is watching", "is running", "is reading", "is sleeping"], correct: 0},
-    {text: "We ______ dinner together.", options: ["are having", "are walking", "are listening", "are swimming"], correct: 0},
-    {text: "They ______ soccer in the park.", options: ["are playing", "are driving", "are studying", "are cooking"], correct: 0},
-    {text: "I ______ to music.", options: ["am listening", "am reading", "am swimming", "am dancing"], correct: 0},
-    {text: "He ______ a book.", options: ["is reading", "is cooking", "is running", "is watching"], correct: 0},
-    {text: "The children ______ loudly.", options: ["are singing", "are running", "are playing", "are jumping"], correct: 0}
+  { title: "Sunday: Present Simple vs Present Continuous", questions: [
+    {text: "She goes to school every day.", options: ["Present Simple", "Present Continuous"], correct: 0},
+    {text: "We are watching a movie right now.", options: ["Present Simple", "Present Continuous"], correct: 1},
+    {text: "He plays the guitar on weekends.", options: ["Present Simple", "Present Continuous"], correct: 0},
+    {text: "They are eating lunch now.", options: ["Present Simple", "Present Continuous"], correct: 1},
+    {text: "I read books at night.", options: ["Present Simple", "Present Continuous"], correct: 0},
+    {text: "She is doing her homework.", options: ["Present Simple", "Present Continuous"], correct: 1}
   ]},
-  { title: "Monday: Present Continuous - Lesson 2", questions: [
-    {text: "You ______ a cake.", options: ["are baking", "are drawing", "are driving", "are reading"], correct: 0},
-    {text: "She ______ her homework now.", options: ["is doing", "is singing", "is dancing", "is painting"], correct: 0},
-    {text: "We ______ for the bus.", options: ["are waiting", "are singing", "are walking", "are writing"], correct: 0},
-    {text: "I ______ a letter.", options: ["am writing", "am driving", "am dancing", "am reading"], correct: 0},
-    {text: "The baby ______ now.", options: ["is sleeping", "is running", "is jumping", "is listening"], correct: 0},
-    {text: "They ______ football.", options: ["are playing", "are painting", "are cooking", "are swimming"], correct: 0}
+  { title: "Monday: Present Simple vs Present Continuous", questions: [
+    {text: "He is speaking on the phone.", options: ["Present Simple", "Present Continuous"], correct: 1},
+    {text: "I brush my teeth in the morning.", options: ["Present Simple", "Present Continuous"], correct: 0},
+    {text: "They are running in the park now.", options: ["Present Simple", "Present Continuous"], correct: 1},
+    {text: "We drink coffee every morning.", options: ["Present Simple", "Present Continuous"], correct: 0},
+    {text: "She is writing a letter.", options: ["Present Simple", "Present Continuous"], correct: 1},
+    {text: "He studies English every day.", options: ["Present Simple", "Present Continuous"], correct: 0}
   ]},
-  { title: "Tuesday: Present Continuous - Lesson 3", questions: [
-    {text: "We ______ to school.", options: ["are walking", "are sleeping", "are jumping", "are cooking"], correct: 0},
-    {text: "She ______ a sandwich.", options: ["is eating", "is singing", "is drawing", "is playing"], correct: 0},
-    {text: "The cat ______ on the sofa.", options: ["is sleeping", "is dancing", "is swimming", "is reading"], correct: 0},
-    {text: "They ______ TV.", options: ["are watching", "are running", "are swimming", "are writing"], correct: 0},
-    {text: "I ______ my room.", options: ["am cleaning", "am writing", "am cooking", "am jumping"], correct: 0},
-    {text: "She ______ the baby.", options: ["is feeding", "is dancing", "is jumping", "is drawing"], correct: 0}
+  { title: "Tuesday: Present Simple vs Present Continuous", questions: [
+    {text: "You are watching a video.", options: ["Present Simple", "Present Continuous"], correct: 1},
+    {text: "The cat sleeps on the sofa.", options: ["Present Simple", "Present Continuous"], correct: 0},
+    {text: "My mom is cooking dinner.", options: ["Present Simple", "Present Continuous"], correct: 1},
+    {text: "We go to the gym on Mondays.", options: ["Present Simple", "Present Continuous"], correct: 0},
+    {text: "I am cleaning my room now.", options: ["Present Simple", "Present Continuous"], correct: 1},
+    {text: "He plays football on Sundays.", options: ["Present Simple", "Present Continuous"], correct: 0}
   ]},
-  { title: "Wednesday: Present Continuous - Lesson 4", questions: [
-    {text: "You ______ too fast!", options: ["are driving", "are singing", "are swimming", "are cooking"], correct: 0},
-    {text: "He ______ English now.", options: ["is studying", "is running", "is painting", "is baking"], correct: 0},
-    {text: "They ______ the house.", options: ["are painting", "are cooking", "are dancing", "are playing"], correct: 0},
-    {text: "I ______ a new song.", options: ["am learning", "am running", "am writing", "am playing"], correct: 0},
-    {text: "We ______ a new car.", options: ["are buying", "are watching", "are driving", "are drawing"], correct: 0},
-    {text: "The dog ______ outside.", options: ["is barking", "is singing", "is dancing", "is eating"], correct: 0}
+  { title: "Wednesday: Present Simple vs Present Continuous", questions: [
+    {text: "They eat pizza every Friday.", options: ["Present Simple", "Present Continuous"], correct: 0},
+    {text: "She is reading a book now.", options: ["Present Simple", "Present Continuous"], correct: 1},
+    {text: "I work in a hospital.", options: ["Present Simple", "Present Continuous"], correct: 0},
+    {text: "We are learning English.", options: ["Present Simple", "Present Continuous"], correct: 1},
+    {text: "He rides his bike to school.", options: ["Present Simple", "Present Continuous"], correct: 0},
+    {text: "They are talking to the teacher.", options: ["Present Simple", "Present Continuous"], correct: 1}
   ]},
-  { title: "Thursday: Present Continuous - Lesson 5", questions: [
-    {text: "She ______ to the teacher.", options: ["is talking", "is jumping", "is cooking", "is swimming"], correct: 0},
-    {text: "They ______ a picnic.", options: ["are having", "are driving", "are writing", "are playing"], correct: 0},
-    {text: "I ______ the dishes.", options: ["am washing", "am cooking", "am running", "am drawing"], correct: 0},
-    {text: "We ______ to music.", options: ["are listening", "are dancing", "are reading", "are jumping"], correct: 0},
-    {text: "He ______ lunch now.", options: ["is eating", "is running", "is swimming", "is painting"], correct: 0},
-    {text: "The kids ______ outside.", options: ["are playing", "are reading", "are cooking", "are jumping"], correct: 0}
+  { title: "Thursday: Present Simple vs Present Continuous", questions: [
+    {text: "You study English at home.", options: ["Present Simple", "Present Continuous"], correct: 0},
+    {text: "I am waiting for the bus.", options: ["Present Simple", "Present Continuous"], correct: 1},
+    {text: "She listens to music every day.", options: ["Present Simple", "Present Continuous"], correct: 0},
+    {text: "We are playing a game.", options: ["Present Simple", "Present Continuous"], correct: 1},
+    {text: "He always eats lunch at noon.", options: ["Present Simple", "Present Continuous"], correct: 0},
+    {text: "They are dancing now.", options: ["Present Simple", "Present Continuous"], correct: 1}
   ]},
-  { title: "Friday: Present Continuous - Lesson 6", questions: [
-    {text: "You ______ too much noise!", options: ["are making", "are swimming", "are reading", "are playing"], correct: 0},
-    {text: "She ______ a story.", options: ["is telling", "is singing", "is painting", "is running"], correct: 0},
-    {text: "They ______ the table.", options: ["are setting", "are baking", "are cooking", "are reading"], correct: 0},
-    {text: "I ______ a message.", options: ["am sending", "am running", "am watching", "am cooking"], correct: 0},
-    {text: "He ______ a joke.", options: ["is telling", "is running", "is painting", "is swimming"], correct: 0},
-    {text: "We ______ for the trip.", options: ["are packing", "are baking", "are drawing", "are watching"], correct: 0}
+  { title: "Friday: Present Simple vs Present Continuous", questions: [
+    {text: "He usually walks to work.", options: ["Present Simple", "Present Continuous"], correct: 0},
+    {text: "She is walking to the store now.", options: ["Present Simple", "Present Continuous"], correct: 1},
+    {text: "I drink tea every morning.", options: ["Present Simple", "Present Continuous"], correct: 0},
+    {text: "We are eating dinner at the moment.", options: ["Present Simple", "Present Continuous"], correct: 1},
+    {text: "They read the newspaper on Sundays.", options: ["Present Simple", "Present Continuous"], correct: 0},
+    {text: "You are reading this quiz.", options: ["Present Simple", "Present Continuous"], correct: 1}
   ]},
-  { title: "Saturday: Present Continuous - Lesson 7", questions: [
-    {text: "She ______ a song.", options: ["is singing", "is reading", "is swimming", "is writing"], correct: 0},
-    {text: "I ______ to work.", options: ["am going", "am reading", "am watching", "am playing"], correct: 0},
-    {text: "They ______ the garden.", options: ["are watering", "are baking", "are running", "are cooking"], correct: 0},
-    {text: "We ______ dinner.", options: ["are cooking", "are drawing", "are painting", "are running"], correct: 0},
-    {text: "The baby ______ now.", options: ["is crying", "is reading", "is jumping", "is listening"], correct: 0},
-    {text: "He ______ with friends.", options: ["is talking", "is painting", "is running", "is swimming"], correct: 0}
+  { title: "Saturday: Present Simple vs Present Continuous", questions: [
+    {text: "She wears glasses.", options: ["Present Simple", "Present Continuous"], correct: 0},
+    {text: "He is wearing a blue shirt today.", options: ["Present Simple", "Present Continuous"], correct: 1},
+    {text: "We go to the beach every summer.", options: ["Present Simple", "Present Continuous"], correct: 0},
+    {text: "I am talking to my friend now.", options: ["Present Simple", "Present Continuous"], correct: 1},
+    {text: "They work in a school.", options: ["Present Simple", "Present Continuous"], correct: 0},
+    {text: "You are working hard today!", options: ["Present Simple", "Present Continuous"], correct: 1}
   ]}
 ];
 
