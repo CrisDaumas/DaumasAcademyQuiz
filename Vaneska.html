@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Daily Lesson</title>
+  <title>Daily Possessives Practice</title>
   <style>
     body { font-family: Arial, sans-serif; max-width: 600px; margin: 2rem auto; padding: 1rem; }
-    h2 { text-align: center; }
+    h2, h3 { text-align: center; }
     #question { font-size: 1.2rem; margin: 1rem 0; }
     #options button { display: block; width: 100%; margin: 0.3rem 0; padding: 0.5rem; font-size: 1rem; cursor: pointer; }
     .correct { background-color: #4CAF50 !important; color: white; }
@@ -18,156 +18,210 @@
   </style>
 </head>
 <body>
-
-<h2 id="lessonTitle"></h2>
+<h2 id="lessonDay"></h2>
+<h3 id="lessonTitle"></h3>
 <div id="question"></div>
 <div id="options"></div>
 <div id="bar-container"><div id="bar"></div></div>
 <div id="score" class="hidden"></div>
 
 <script>
-const lessons = [
-  { title: "Sunday: Present Simple vs Present Continuous", questions: [
-    {text: "She goes to school every day.", options: ["Present Simple", "Present Continuous"], correct: 0},
-    {text: "We are watching a movie right now.", options: ["Present Simple", "Present Continuous"], correct: 1},
-    {text: "He plays the guitar on weekends.", options: ["Present Simple", "Present Continuous"], correct: 0},
-    {text: "They are eating lunch now.", options: ["Present Simple", "Present Continuous"], correct: 1},
-    {text: "I read books at night.", options: ["Present Simple", "Present Continuous"], correct: 0},
-    {text: "She is doing her homework.", options: ["Present Simple", "Present Continuous"], correct: 1}
-  ]},
-  { title: "Monday: Present Simple vs Present Continuous", questions: [
-    {text: "He is speaking on the phone.", options: ["Present Simple", "Present Continuous"], correct: 1},
-    {text: "I brush my teeth in the morning.", options: ["Present Simple", "Present Continuous"], correct: 0},
-    {text: "They are running in the park now.", options: ["Present Simple", "Present Continuous"], correct: 1},
-    {text: "We drink coffee every morning.", options: ["Present Simple", "Present Continuous"], correct: 0},
-    {text: "She is writing a letter.", options: ["Present Simple", "Present Continuous"], correct: 1},
-    {text: "He studies English every day.", options: ["Present Simple", "Present Continuous"], correct: 0}
-  ]},
-  { title: "Tuesday: Present Simple vs Present Continuous", questions: [
-    {text: "You are watching a video.", options: ["Present Simple", "Present Continuous"], correct: 1},
-    {text: "The cat sleeps on the sofa.", options: ["Present Simple", "Present Continuous"], correct: 0},
-    {text: "My mom is cooking dinner.", options: ["Present Simple", "Present Continuous"], correct: 1},
-    {text: "We go to the gym on Mondays.", options: ["Present Simple", "Present Continuous"], correct: 0},
-    {text: "I am cleaning my room now.", options: ["Present Simple", "Present Continuous"], correct: 1},
-    {text: "He plays football on Sundays.", options: ["Present Simple", "Present Continuous"], correct: 0}
-  ]},
-  { title: "Wednesday: Present Simple vs Present Continuous", questions: [
-    {text: "They eat pizza every Friday.", options: ["Present Simple", "Present Continuous"], correct: 0},
-    {text: "She is reading a book now.", options: ["Present Simple", "Present Continuous"], correct: 1},
-    {text: "I work in a hospital.", options: ["Present Simple", "Present Continuous"], correct: 0},
-    {text: "We are learning English.", options: ["Present Simple", "Present Continuous"], correct: 1},
-    {text: "He rides his bike to school.", options: ["Present Simple", "Present Continuous"], correct: 0},
-    {text: "They are talking to the teacher.", options: ["Present Simple", "Present Continuous"], correct: 1}
-  ]},
-  { title: "Thursday: Present Simple vs Present Continuous", questions: [
-    {text: "You study English at home.", options: ["Present Simple", "Present Continuous"], correct: 0},
-    {text: "I am waiting for the bus.", options: ["Present Simple", "Present Continuous"], correct: 1},
-    {text: "She listens to music every day.", options: ["Present Simple", "Present Continuous"], correct: 0},
-    {text: "We are playing a game.", options: ["Present Simple", "Present Continuous"], correct: 1},
-    {text: "He always eats lunch at noon.", options: ["Present Simple", "Present Continuous"], correct: 0},
-    {text: "They are dancing now.", options: ["Present Simple", "Present Continuous"], correct: 1}
-  ]},
-  { title: "Friday: Present Simple vs Present Continuous", questions: [
-    {text: "He usually walks to work.", options: ["Present Simple", "Present Continuous"], correct: 0},
-    {text: "She is walking to the store now.", options: ["Present Simple", "Present Continuous"], correct: 1},
-    {text: "I drink tea every morning.", options: ["Present Simple", "Present Continuous"], correct: 0},
-    {text: "We are eating dinner at the moment.", options: ["Present Simple", "Present Continuous"], correct: 1},
-    {text: "They read the newspaper on Sundays.", options: ["Present Simple", "Present Continuous"], correct: 0},
-    {text: "You are reading this quiz.", options: ["Present Simple", "Present Continuous"], correct: 1}
-  ]},
-  { title: "Saturday: Present Simple vs Present Continuous", questions: [
-    {text: "She wears glasses.", options: ["Present Simple", "Present Continuous"], correct: 0},
-    {text: "He is wearing a blue shirt today.", options: ["Present Simple", "Present Continuous"], correct: 1},
-    {text: "We go to the beach every summer.", options: ["Present Simple", "Present Continuous"], correct: 0},
-    {text: "I am talking to my friend now.", options: ["Present Simple", "Present Continuous"], correct: 1},
-    {text: "They work in a school.", options: ["Present Simple", "Present Continuous"], correct: 0},
-    {text: "You are working hard today!", options: ["Present Simple", "Present Continuous"], correct: 1}
-  ]}
-];
+const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const roman = ["I", "II", "III"];
+const lessonTitle = "Possessive Pronouns X Possessive Adjectives";
 
-let currentLessonIndex = new Date().getDay();
-const lessonTitle = document.getElementById("lessonTitle");
-const questionEl = document.getElementById("question");
-const optionsEl = document.getElementById("options");
-const barEl = document.getElementById("bar");
-const scoreEl = document.getElementById("score");
-let currentIndex = 0;
-let score = 0;
-let acceptingAnswers = true;
+const questionsData = {
+  "Sunday - I": [
+    { text: "This is _____ pen. (belongs to me)", options: ["mine", "my", "me"], correct: 0 },
+    { text: "_____ mother is very kind.", options: ["My", "Mine", "Me"], correct: 0 },
+    { text: "That bag is not yours. It’s _____.", options: ["mine", "my", "me"], correct: 0 },
+    { text: "He is looking for _____ phone.", options: ["his", "him", "he"], correct: 0 },
+    { text: "We forgot _____ tickets at home.", options: ["our", "ours", "us"], correct: 0 },
+    { text: "She brought _____ lunch to school.", options: ["her", "hers", "she"], correct: 0 },
+    { text: "This is not their car. It’s _____.", options: ["ours", "our", "us"], correct: 0 },
+    { text: "Where is _____ backpack?", options: ["your", "yours", "you"], correct: 0 },
+    { text: "They are playing with _____ toys.", options: ["their", "theirs", "them"], correct: 0 },
+    { text: "_____ name is John.", options: ["His", "Him", "He"], correct: 0 }
+  ],
+  "Sunday - II": [
+    { text: "This is _____ house, not yours.", options: ["my", "mine", "me"], correct: 1 },
+    { text: "_____ dog is very friendly.", options: ["Their", "Theirs", "Them"], correct: 0 },
+    { text: "She forgot _____ keys.", options: ["her", "hers", "she"], correct: 0 },
+    { text: "That book is _____.", options: ["ours", "our", "us"], correct: 0 },
+    { text: "Is this _____ chair or his?", options: ["your", "yours", "you"], correct: 1 },
+    { text: "I like _____ new car.", options: ["my", "mine", "me"], correct: 0 },
+    { text: "The children took _____ toys.", options: ["their", "theirs", "them"], correct: 0 },
+    { text: "This jacket is _____.", options: ["mine", "my", "me"], correct: 0 },
+    { text: "He lost _____ wallet yesterday.", options: ["his", "him", "he"], correct: 0 },
+    { text: "We cleaned _____ room.", options: ["our", "ours", "us"], correct: 0 }
+  ],
+  "Sunday - III": [
+    { text: "_____ sister is a nurse.", options: ["My", "Mine", "Me"], correct: 0 },
+    { text: "That bicycle is _____.", options: ["hers", "her", "she"], correct: 0 },
+    { text: "Are these _____ shoes or hers?", options: ["your", "yours", "you"], correct: 1 },
+    { text: "They found _____ keys.", options: ["their", "theirs", "them"], correct: 0 },
+    { text: "This is _____ book.", options: ["my", "mine", "me"], correct: 0 },
+    { text: "He loves _____ job.", options: ["his", "him", "he"], correct: 0 },
+    { text: "We brought _____ lunch.", options: ["our", "ours", "us"], correct: 0 },
+    { text: "The cat lost _____ collar.", options: ["its", "it's", "it"], correct: 0 },
+    { text: "Is that _____ car outside?", options: ["your", "yours", "you"], correct: 0 },
+    { text: "This house is _____.", options: ["ours", "our", "we"], correct: 0 }
+  ],
 
-function loadQuestion() {
-  acceptingAnswers = true;
-  const lesson = lessons[currentLessonIndex];
-  const q = lesson.questions[currentIndex];
-  lessonTitle.textContent = lesson.title;
-  questionEl.innerHTML = q.text;
-  optionsEl.innerHTML = "";
-  scoreEl.classList.add("hidden");
-  barEl.style.width = `${(currentIndex / lesson.questions.length) * 100}%`;
+  "Monday - I": [
+    { text: "This is _____ pencil.", options: ["mine", "my", "me"], correct: 0 },
+    { text: "_____ father is a doctor.", options: ["My", "Mine", "Me"], correct: 0 },
+    { text: "That bag is not yours. It’s _____.", options: ["mine", "my", "me"], correct: 0 },
+    { text: "He is calling _____ friend.", options: ["his", "him", "he"], correct: 0 },
+    { text: "We forgot _____ homework.", options: ["our", "ours", "us"], correct: 0 },
+    { text: "She found _____ keys.", options: ["her", "hers", "she"], correct: 0 },
+    { text: "This notebook is not theirs. It’s _____.", options: ["ours", "our", "us"], correct: 0 },
+    { text: "Where is _____ umbrella?", options: ["your", "yours", "you"], correct: 0 },
+    { text: "They cleaned _____ room.", options: ["their", "theirs", "them"], correct: 0 },
+    { text: "The children play with _____ toys.", options: ["their", "theirs", "them"], correct: 0 }
+  ],
+  "Monday - II": [
+    { text: "_____ jacket is red.", options: ["My", "Mine", "Me"], correct: 0 },
+    { text: "Is this _____ bag?", options: ["your", "yours", "you"], correct: 0 },
+    { text: "The dog wagged _____ tail.", options: ["its", "it's", "it"], correct: 0 },
+    { text: "That phone is _____.", options: ["hers", "her", "she"], correct: 0 },
+    { text: "We took _____ books.", options: ["our", "ours", "us"], correct: 0 },
+    { text: "He lost _____ wallet.", options: ["his", "him", "he"], correct: 0 },
+    { text: "This is not your car. It’s _____.", options: ["mine", "my", "me"], correct: 0 },
+    { text: "She loves _____ cat.", options: ["her", "hers", "she"], correct: 0 },
+    { text: "Are those _____ shoes?", options: ["your", "yours", "you"], correct: 0 },
+    { text: "The house is _____.", options: ["ours", "our", "we"], correct: 0 }
+  ],
+  "Monday - III": [
+    { text: "This is _____ dress.", options: ["my", "mine", "me"], correct: 0 },
+    { text: "_____ brother is kind.", options: ["My", "Mine", "Me"], correct: 0 },
+    { text: "They lost _____ keys.", options: ["their", "theirs", "them"], correct: 0 },
+    { text: "That bike is _____.", options: ["hers", "her", "she"], correct: 0 },
+    { text: "We cleaned _____ house.", options: ["our", "ours", "us"], correct: 0 },
+    { text: "He forgot _____ wallet.", options: ["his", "him", "he"], correct: 0 },
+    { text: "Is this _____ phone?", options: ["your", "yours", "you"], correct: 0 },
+    { text: "The children are playing with _____ toys.", options: ["their", "theirs", "them"], correct: 0 },
+    { text: "This house is _____.", options: ["ours", "our", "we"], correct: 0 },
+    { text: "She loves _____ job.", options: ["her", "hers", "she"], correct: 0 }
+  ],
 
-  q.options.forEach((opt, i) => {
-    const button = document.createElement("button");
-    button.className = "option";
-    button.textContent = opt;
-    button.onclick = () => selectOption(i);
-    optionsEl.appendChild(button);
-  });
-}
+  "Tuesday - I": [
+    { text: "_____ dog is friendly.", options: ["My", "Mine", "Me"], correct: 0 },
+    { text: "Is this _____ book?", options: ["your", "yours", "you"], correct: 0 },
+    { text: "He lost _____ keys.", options: ["his", "him", "he"], correct: 0 },
+    { text: "This is not her bag. It’s _____.", options: ["mine", "my", "me"], correct: 0 },
+    { text: "We forgot _____ tickets.", options: ["our", "ours", "us"], correct: 0 },
+    { text: "They took _____ toys.", options: ["their", "theirs", "them"], correct: 0 },
+    { text: "The cat lost _____ collar.", options: ["its", "it's", "it"], correct: 0 },
+    { text: "Is that _____ bike outside?", options: ["your", "yours", "you"], correct: 0 },
+    { text: "This is _____ house.", options: ["my", "mine", "me"], correct: 0 },
+    { text: "He loves _____ job.", options: ["his", "him", "he"], correct: 0 }
+  ],
+  "Tuesday - II": [
+    { text: "_____ sister is kind.", options: ["My", "Mine", "Me"], correct: 0 },
+    { text: "Is this _____ phone?", options: ["your", "yours", "you"], correct: 0 },
+    { text: "She lost _____ keys.", options: ["her", "hers", "she"], correct: 0 },
+    { text: "That house is _____.", options: ["ours", "our", "we"], correct: 0 },
+    { text: "We brought _____ lunch.", options: ["our", "ours", "us"], correct: 0 },
+    { text: "They washed _____ hands.", options: ["their", "theirs", "them"], correct: 0 },
+    { text: "This jacket is _____.", options: ["mine", "my", "me"], correct: 0 },
+    { text: "He forgot _____ wallet.", options: ["his", "him", "he"], correct: 0 },
+    { text: "Where is _____ backpack?", options: ["your", "yours", "you"], correct: 0 },
+    { text: "She loves _____ cat.", options: ["her", "hers", "she"], correct: 0 }
+  ],
+  "Tuesday - III": [
+    { text: "This is _____ notebook.", options: ["my", "mine", "me"], correct: 0 },
+    { text: "_____ father is a doctor.", options: ["My", "Mine", "Me"], correct: 0 },
+    { text: "They forgot _____ tickets.", options: ["their", "theirs", "them"], correct: 0 },
+    { text: "That car is _____.", options: ["hers", "her", "she"], correct: 0 },
+    { text: "We took _____ bags.", options: ["our", "ours", "us"], correct: 0 },
+    { text: "He lost _____ phone.", options: ["his", "him", "he"], correct: 0 },
+    { text: "Is this _____ chair?", options: ["your", "yours", "you"], correct: 0 },
+    { text: "The children love _____ toys.", options: ["their", "theirs", "them"], correct: 0 },
+    { text: "This house is _____.", options: ["ours", "our", "we"], correct: 0 },
+    { text: "She forgot _____ keys.", options: ["her", "hers", "she"], correct: 0 }
+  ],
 
-function selectOption(selected) {
-  if (!acceptingAnswers) return;
-  acceptingAnswers = false;
+  "Wednesday - I": [
+    { text: "_____ brother is tall.", options: ["My", "Mine", "Me"], correct: 0 },
+    { text: "Is this _____ phone?", options: ["your", "yours", "you"], correct: 0 },
+    { text: "He lost _____ keys.", options: ["his", "him", "he"], correct: 0 },
+    { text: "That book is _____.", options: ["hers", "her", "she"], correct: 0 },
+    { text: "We took _____ lunch.", options: ["our", "ours", "us"], correct: 0 },
+    { text: "She found _____ wallet.", options: ["her", "hers", "she"], correct: 0 },
+    { text: "This is not their car. It’s _____.", options: ["ours", "our", "us"], correct: 0 },
+    { text: "Where is _____ umbrella?", options: ["your", "yours", "you"], correct: 0 },
+    { text: "The children play with _____ toys.", options: ["their", "theirs", "them"], correct: 0 },
+    { text: "This house is _____.", options: ["ours", "our", "we"], correct: 0 }
+  ],
+  "Wednesday - II": [
+    { text: "My jacket is red, but _____ is blue.", options: ["mine", "my", "me"], correct: 0 },
+    { text: "_____ mother is at home.", options: ["My", "Mine", "Me"], correct: 0 },
+    { text: "She lost _____ keys.", options: ["her", "hers", "she"], correct: 0 },
+    { text: "Is this _____ backpack?", options: ["your", "yours", "you"], correct: 0 },
+    { text: "We forgot _____ tickets.", options: ["our", "ours", "us"], correct: 0 },
+    { text: "That car is _____.", options: ["hers", "her", "she"], correct: 0 },
+    { text: "He loves _____ dog.", options: ["his", "him", "he"], correct: 0 },
+    { text: "This notebook is not yours. It’s _____.", options: ["mine", "my", "me"], correct: 0 },
+    { text: "They are playing with _____ toys.", options: ["their", "theirs", "them"], correct: 0 },
+    { text: "Where is _____ umbrella?", options: ["your", "yours", "you"], correct: 0 }
+  ],
+  "Wednesday - III": [
+    { text: "_____ father is a teacher.", options: ["My", "Mine", "Me"], correct: 0 },
+    { text: "Is this _____ phone?", options: ["your", "yours", "you"], correct: 0 },
+    { text: "She forgot _____ keys.", options: ["her", "hers", "she"], correct: 0 },
+    { text: "This house is _____.", options: ["ours", "our", "we"], correct: 0 },
+    { text: "We brought _____ lunch.", options: ["our", "ours", "us"], correct: 0 },
+    { text: "They washed _____ hands.", options: ["their", "theirs", "them"], correct: 0 },
+    { text: "That bag is not mine, it’s _____.", options: ["hers", "her", "she"], correct: 0 },
+    { text: "Where is _____ backpack?", options: ["your", "yours", "you"], correct: 0 },
+    { text: "He lost _____ keys yesterday.", options: ["his", "him", "he"], correct: 0 },
+    { text: "The children are playing with _____ toys.", options: ["their", "theirs", "them"], correct: 0 }
+  ],
 
-  const lesson = lessons[currentLessonIndex];
-  const q = lesson.questions[currentIndex];
-  const buttons = optionsEl.querySelectorAll("button");
+  "Thursday - I": [
+    { text: "This is _____ pen.", options: ["my", "mine", "me"], correct: 1 },
+    { text: "_____ sister is a nurse.", options: ["My", "Mine", "Me"], correct: 0 },
+    { text: "They lost _____ tickets.", options: ["their", "theirs", "them"], correct: 0 },
+    { text: "That house is _____.", options: ["ours", "our", "we"], correct: 0 },
+    { text: "We forgot _____ lunch.", options: ["our", "ours", "us"], correct: 0 },
+    { text: "He loves _____ dog.", options: ["his", "him", "he"], correct: 0 },
+    { text: "Is this _____ phone?", options: ["your", "yours", "you"], correct: 0 },
+    { text: "The cat lost _____ collar.", options: ["its", "it's", "it"], correct: 0 },
+    { text: "This jacket is _____.", options: ["mine", "my", "me"], correct: 0 },
+    { text: "Where is _____ backpack?", options: ["your", "yours", "you"], correct: 0 } ], "Thursday - II": [ { text: "My mother is reading _____.", options: ["her", "hers", "she"], correct: 0 }, { text: "Is that _____ car outside?", options: ["your", "yours", "you"], correct: 0 }, { text: "They washed _____ hands.", options: ["their", "theirs", "them"], correct: 0 }, { text: "This is _____ notebook.", options: ["my", "mine", "me"], correct: 0 }, { text: "He lost _____ keys.", options: ["his", "him", "he"], correct: 0 }, { text: "She found _____ wallet.", options: ["her", "hers", "she"], correct: 0 }, { text: "We brought _____ lunch.", options: ["our", "ours", "us"], correct: 0 }, { text: "That bike is _____.", options: ["hers", "her", "she"], correct: 0 }, { text: "Are these _____ shoes?", options: ["your", "yours", "you"], correct: 0 }, { text: "This is not your car. It’s .", options: ["mine", "my", "me"], correct: 0 } ], "Thursday - III": [ { text: "This is _____ dress.", options: ["my", "mine", "me"], correct: 0 }, { text: " brother is kind.", options: ["My", "Mine", "Me"], correct: 0 }, { text: "They lost _____ keys.", options: ["their", "theirs", "them"], correct: 0 }, { text: "Is this _____ phone?", options: ["your", "yours", "you"], correct: 0 }, { text: "We cleaned _____ house.", options: ["our", "ours", "us"], correct: 0 }, { text: "He forgot _____ wallet.", options: ["his", "him", "he"], correct: 0 }, { text: "The children are playing with _____ toys.", options: ["their", "theirs", "them"], correct: 0 }, { text: "This house is _____.", options: ["ours", "our", "we"], correct: 0 }, { text: "She loves _____ job.", options: ["her", "hers", "she"], correct: 0 }, { text: "Where is _____ backpack?", options: ["your", "yours", "you"], correct: 0 } ],
 
-  buttons.forEach((btn, i) => {
-    btn.disabled = true;
-    if (i === q.correct) btn.classList.add("correct");
-    if (i === selected && selected !== q.correct) btn.classList.add("incorrect");
-  });
+"Friday - I": [ { text: "_____ mother is at work.", options: ["My", "Mine", "Me"], correct: 0 }, { text: "Is this _____ pen?", options: ["your", "yours", "you"], correct: 0 }, { text: "He lost _____ keys.", options: ["his", "him", "he"], correct: 0 }, { text: "They forgot _____ tickets.", options: ["their", "theirs", "them"], correct: 0 }, { text: "This is _____ book.", options: ["my", "mine", "me"], correct: 0 }, { text: "She found _____ wallet.", options: ["her", "hers", "she"], correct: 0 }, { text: "We brought _____ lunch.", options: ["our", "ours", "us"], correct: 0 }, { text: "That car is _____.", options: ["hers", "her", "she"], correct: 0 }, { text: "The children are playing with _____ toys.", options: ["their", "theirs", "them"], correct: 0 }, { text: "Where is _____ umbrella?", options: ["your", "yours", "you"], correct: 0 } ], "Friday - II": [ { text: "My dog is very friendly.", options: ["my", "mine", "me"], correct: 0 }, { text: "Is that _____ jacket?", options: ["your", "yours", "you"], correct: 0 }, { text: "She lost _____ keys.", options: ["her", "hers", "she"], correct: 0 }, { text: "That house is _____.", options: ["ours", "our", "we"], correct: 0 }, { text: "He forgot _____ wallet.", options: ["his", "him", "he"], correct: 0 }, { text: "We washed _____ hands.", options: ["our", "ours", "us"], correct: 0 }, { text: "This notebook is .", options: ["mine", "my", "me"], correct: 0 }, { text: "Are those _____ shoes?", options: ["your", "yours", "you"], correct: 0 }, { text: "The cat lost _____ collar.", options: ["its", "it's", "it"], correct: 0 }, { text: "Where is _____ backpack?", options: ["your", "yours", "you"], correct: 0 } ], "Friday - III": [ { text: "This is _____ dress.", options: ["my", "mine", "me"], correct: 0 }, { text: " brother is kind.", options: ["My", "Mine", "Me"], correct: 0 }, { text: "They lost _____ keys.", options: ["their", "theirs", "them"], correct: 0 }, { text: "Is this _____ phone?", options: ["your", "yours", "you"], correct: 0 }, { text: "We cleaned _____ house.", options: ["our", "ours", "us"], correct: 0 }, { text: "He forgot _____ wallet.", options: ["his", "him", "he"], correct: 0 }, { text: "The children are playing with _____ toys.", options: ["their", "theirs", "them"], correct: 0 }, { text: "This house is _____.", options: ["ours", "our", "we"], correct: 0 }, { text: "She loves _____ job.", options: ["her", "hers", "she"], correct: 0 }, { text: "Where is _____ backpack?", options: ["your", "yours", "you"], correct: 0 } ],
 
-  if (selected === q.correct) score++;
+"Saturday - I": [ { text: "_____ mother is cooking.", options: ["My", "Mine", "Me"], correct: 0 }, { text: "Is this _____ pen?", options: ["your", "yours", "you"], correct: 0 }, { text: "He lost _____ keys.", options: ["his", "him", "he"], correct: 0 }, { text: "They forgot _____ tickets.", options: ["their", "theirs", "them"], correct: 0 }, { text: "This is _____ book.", options: ["my", "mine", "me"], correct: 0 }, { text: "She found _____ wallet.", options: ["her", "hers", "she"], correct: 0 }, { text: "We brought _____ lunch.", options: ["our", "ours", "us"], correct: 0 }, { text: "That car is _____.", options: ["hers", "her", "she"], correct: 0 }, { text: "The children are playing with _____ toys.", options: ["their", "theirs", "them"], correct: 0 }, { text: "Where is _____ umbrella?", options: ["your", "yours", "you"], correct: 0 } ], "Saturday - II": [ { text: "My dog is very friendly.", options: ["my", "mine", "me"], correct: 0 }, { text: "Is that _____ jacket?", options: ["your", "yours", "you"], correct: 0 }, { text: "She lost _____ keys.", options: ["her", "hers", "she"], correct: 0 }, { text: "That house is _____.", options: ["ours", "our", "we"], correct: 0 }, { text: "He forgot _____ wallet.", options: ["his", "him", "he"], correct: 0 }, { text: "We washed _____ hands.", options: ["our", "ours", "us"], correct: 0 }, { text: "This notebook is .", options: ["mine", "my", "me"], correct: 0 }, { text: "Are those _____ shoes?", options: ["your", "yours", "you"], correct: 0 }, { text: "The cat lost _____ collar.", options: ["its", "it's", "it"], correct: 0 }, { text: "Where is _____ backpack?", options: ["your", "yours", "you"], correct: 0 } ], "Saturday - III": [ { text: "This is _____ dress.", options: ["my", "mine", "me"], correct: 0 }, { text: " brother is kind.", options: ["My", "Mine", "Me"], correct: 0 }, { text: "They lost _____ keys.", options: ["their", "theirs", "them"], correct: 0 }, { text: "Is this _____ phone?", options: ["your", "yours", "you"], correct: 0 }, { text: "We cleaned _____ house.", options: ["our", "ours", "us"], correct: 0 }, { text: "He forgot _____ wallet.", options: ["his", "him", "he"], correct: 0 }, { text: "The children are playing with _____ toys.", options: ["their", "theirs", "them"], correct: 0 }, { text: "This house is _____.", options: ["ours", "our", "we"], correct: 0 }, { text: "She loves _____ job.", options: ["her", "hers", "she"], correct: 0 }, { text: "Where is _____ backpack?", options: ["your", "yours", "you"], correct: 0 } ] };
 
-  currentIndex++;
-  barEl.style.width = `${(currentIndex / lesson.questions.length) * 100}%`;
+let currentDayIndex = new Date().getDay(); let hours = new Date().getHours(); let block = hours < 12 ? 0 : hours < 17 ? 1 : 2; let currentKey = ${weekdays[currentDayIndex]} - ${roman[block]};
 
-  if (currentIndex < lesson.questions.length) {
-    setTimeout(loadQuestion, 2000);
-  } else {
-    setTimeout(showScore, 2000);
-  }
-}
+const lessonDay = document.getElementById("lessonDay"); const lessonTitleEl = document.getElementById("lessonTitle"); const questionEl = document.getElementById("question"); const optionsEl = document.getElementById("options"); const barEl = document.getElementById("bar"); const scoreEl = document.getElementById("score");
 
-function showScore() {
-  questionEl.textContent = "";
-  optionsEl.innerHTML = "";
-  scoreEl.textContent = `You scored ${score} out of ${lessons[currentLessonIndex].questions.length}!`;
-  scoreEl.classList.remove("hidden");
-  barEl.style.width = "100%";
-}
+let currentIndex = 0; let score = 0; let acceptingAnswers = true;
 
-window.addEventListener("keydown", (e) => {
-  if (e.code === "NumpadAdd") {
-    currentLessonIndex = (currentLessonIndex + 1) % lessons.length;
-    resetLesson();
-  } else if (e.code === "NumpadSubtract") {
-    currentLessonIndex = (currentLessonIndex - 1 + lessons.length) % lessons.length;
-    resetLesson();
-  }
-});
+function loadQuestion() { acceptingAnswers = true; const q = questionsData[currentKey][currentIndex]; lessonDay.textContent = ${currentKey}; lessonTitleEl.textContent = lessonTitle; questionEl.innerHTML = q.text; optionsEl.innerHTML = ""; scoreEl.classList.add("hidden"); barEl.style.width = ${(currentIndex / 10) * 100}%;
 
-function resetLesson() {
-  currentIndex = 0;
-  score = 0;
-  scoreEl.classList.add("hidden");
-  barEl.style.width = "0%";
-  loadQuestion();
-}
+q.options.forEach((opt, i) => { const button = document.createElement("button"); button.className = "option"; button.textContent = opt; button.onclick = () => selectOption(i); optionsEl.appendChild(button); }); }
 
-loadQuestion();
-</script>
+function selectOption(selected) { if (!acceptingAnswers) return; acceptingAnswers = false;
+
+const q = questionsData[currentKey][currentIndex]; const buttons = optionsEl.querySelectorAll("button");
+
+buttons.forEach((btn, i) => { btn.disabled = true; if (i === q.correct) btn.classList.add("correct"); if (i === selected && selected !== q.correct) btn.classList.add("incorrect"); });
+
+if (selected === q.correct) score++; currentIndex++; barEl.style.width = ${(currentIndex / 10) * 100}%;
+
+if (currentIndex < 10) { setTimeout(loadQuestion, 2000); } else { setTimeout(showScore, 2000); } }
+
+function showScore() { questionEl.textContent = ""; optionsEl.innerHTML = ""; scoreEl.textContent = You scored ${score} out of 10!; scoreEl.classList.remove("hidden"); barEl.style.width = "100%"; }
+
+window.addEventListener("keydown", (e) => { if (e.code === "NumpadAdd") { block = (block + 1) % 3; currentKey = ${weekdays[currentDayIndex]} - ${roman[block]}; resetLesson(); } else if (e.code === "NumpadSubtract") { block = (block - 1 + 3) % 3; currentKey = ${weekdays[currentDayIndex]} - ${roman[block]}; resetLesson(); } });
+
+function resetLesson() { currentIndex = 0; score = 0; scoreEl.classList.add("hidden"); barEl.style.width = "0%"; loadQuestion(); }
+
+loadQuestion(); </script>
 
 </body>
 </html>
