@@ -1,384 +1,137 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Daily Possessives Practice</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Grammar Quiz</title>
   <style>
-    body { font-family: Arial, sans-serif; max-width: 600px; margin: 2rem auto; padding: 1rem; }
-    h2, h3 { text-align: center; }
-    #question { font-size: 1.2rem; margin: 1rem 0; }
-    #options button { display: block; width: 100%; margin: 0.3rem 0; padding: 0.5rem; font-size: 1rem; cursor: pointer; }
-    .correct { background-color: #4CAF50 !important; color: white; }
-    .incorrect { background-color: #f44336 !important; color: white; }
-    #score { font-weight: bold; font-size: 1.3rem; text-align: center; margin-top: 1rem; }
-    #score.hidden { display: none; }
-    #bar-container { width: 100%; height: 15px; background-color: #ddd; margin-top: 1rem; }
-    #bar { height: 15px; width: 0%; background-color: #4CAF50; transition: width 0.3s; }
+    
+  body { font-family: Arial, sans-serif; padding: 20px; margin: 0; background: #1e1e1e; color: #f5f5f5; }
+  .container { max-width: 600px; margin: auto; background: #2c2c2c; padding: 20px; border-radius: 12px; box-shadow: 0 0 15px rgba(0,0,0,0.7); }
+  h1, h2, h3 { text-align: center; color: #ffffff; }
+  #question { font-size: 1.3em; margin: 20px 0; color: #e0e0e0; }
+  .options { display: flex; flex-direction: column; gap: 12px; }
+  button.option {
+    padding: 12px;
+    font-size: 1em;
+    border: none;
+    border-radius: 8px;
+    background: #3a3a3a;
+    color: #f0f0f0;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+  button.option:hover:not(:disabled) { background: #505050; transform: scale(1.02); }
+  button.option.correct { background: #2e7d32; color: #ffffff; }
+  button.option.incorrect { background: #c62828; color: #ffffff; }
+  button.option:disabled { cursor: not-allowed; opacity: 0.8; }
+  #progress-bar { height: 20px; background: #444; border-radius: 10px; overflow: hidden; margin: 20px 0; }
+  #progress { height: 100%; background: linear-gradient(to right, #4caf50, #81c784); width: 0%; transition: width 0.3s; }
+  #score { text-align: center; font-size: 1.2em; margin-top: 20px; color: #a5d6a7; }
+
+    .container {{ max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }}
+    h1, h2, h3 {{ text-align: center; }}
+    #question {{ font-size: 1.2em; margin: 20px 0; }}
+    .options {{ display: flex; flex-direction: column; gap: 10px; }}
+    button.option {{ padding: 10px; font-size: 1em; border: 1px solid #ccc; border-radius: 5px; background: #f0f0f0; cursor: pointer; }}
+    button.option.correct {{ background: #c8f7c5; border-color: #27ae60; }}
+    button.option.incorrect {{ background: #f7c5c5; border-color: #c0392b; }}
+    button.option:disabled {{ cursor: not-allowed; }}
+    #progress-bar {{ height: 20px; background: #eee; border-radius: 10px; overflow: hidden; margin: 20px 0; }}
+    #progress {{ height: 100%; background: #3498db; width: 0%; transition: width 0.3s; }}
+    #score {{ text-align: center; font-size: 1.2em; margin-top: 20px; }}
   </style>
 </head>
 <body>
-<h2 id="lessonDay"></h2>
-<h3 id="lessonTitle"></h3>
-<div id="question"></div>
-<div id="options"></div>
-<div id="bar-container"><div id="bar"></div></div>
-<div id="score" class="hidden"></div>
+  <div class="container">
+    <h1>Daily Grammar Quiz</h1>
+    <h2 id="weekday-title"></h2>
+    <h3 id="lesson-title">Simple Past – Regular & Irregular Verbs + Adjectives</h3>
+    <div id="progress-bar"><div id="progress"></div></div>
+    <div id="question"></div>
+    <div class="options" id="options"></div>
+    <div id="score"></div>
+  </div>
+  <script>
+    const questionsData = {"Monday - I": [{"question": "I _____ the newspaper in the morning.", "correct": "went", "options": ["wented", "buyed", "went"]}, {"question": "I _____ the newspaper in the morning.", "correct": "wrote", "options": ["wrote", "drinked", "eated"]}, {"question": "She was _____ after hearing the news.", "correct": "happy", "options": ["angry", "happy", "hungry"]}, {"question": "He _____ a long letter to his friend.", "correct": "read", "options": ["drived", "drinked", "read"]}, {"question": "Yesterday, I _____ to the market.", "correct": "slept", "options": ["slept", "drived", "runned"]}, {"question": "After the run, I felt very _____.", "correct": "hungry", "options": ["cold", "tired", "hungry"]}, {"question": "He _____ all day for the exam.", "correct": "bought", "options": ["goed", "bought", "sleeped"]}, {"question": "She _____ a beautiful dress to the party.", "correct": "studied", "options": ["studied", "drinked", "wented"]}, {"question": "She _____ a beautiful dress to the party.", "correct": "read", "options": ["buyed", "read", "goed"]}, {"question": "She _____ a beautiful dress to the party.", "correct": "drank", "options": ["drank", "wented", "drived"]}], "Monday - II": [{"question": "She was _____ after hearing the news.", "correct": "hungry", "options": ["bored", "hungry", "angry"]}, {"question": "They _____ a lot of water after the match.", "correct": "ate", "options": ["ate", "runned", "buyed"]}, {"question": "He _____ a long letter to his friend.", "correct": "drove", "options": ["drove", "drinked", "buyed"]}, {"question": "Yesterday, I _____ to the market.", "correct": "slept", "options": ["slept", "goed", "buyed"]}, {"question": "She _____ the car to work yesterday.", "correct": "watched", "options": ["watched", "sawed", "buyed"]}, {"question": "He _____ a long letter to his friend.", "correct": "drove", "options": ["runned", "drove", "sleeped"]}, {"question": "They _____ a lot of water after the match.", "correct": "cooked", "options": ["cooked", "wented", "drived"]}, {"question": "They _____ a lot of water after the match.", "correct": "ate", "options": ["sleeped", "eated", "ate"]}, {"question": "We were _____ because of the cold.", "correct": "angry", "options": ["angry", "tired", "hungry"]}, {"question": "They _____ a lot of water after the match.", "correct": "ran", "options": ["wented", "drinked", "ran"]}], "Monday - III": [{"question": "He _____ all day for the exam.", "correct": "cooked", "options": ["cooked", "eated", "sawed"]}, {"question": "They looked _____ at the end of the day.", "correct": "tired", "options": ["hungry", "tired", "angry"]}, {"question": "He _____ a long letter to his friend.", "correct": "saw", "options": ["buyed", "drinked", "saw"]}, {"question": "They _____ a lot of water after the match.", "correct": "cooked", "options": ["sawed", "cooked", "goed"]}, {"question": "They looked _____ at the end of the day.", "correct": "hungry", "options": ["happy", "tired", "hungry"]}, {"question": "After the run, I felt very _____.", "correct": "excited", "options": ["bored", "sad", "excited"]}, {"question": "They _____ pizza for dinner last night.", "correct": "cooked", "options": ["cooked", "wented", "drinked"]}, {"question": "They _____ a lot of water after the match.", "correct": "drove", "options": ["drove", "wented", "buyed"]}, {"question": "I _____ a book before sleeping.", "correct": "cooked", "options": ["eated", "buyed", "cooked"]}, {"question": "They _____ a lot of water after the match.", "correct": "bought", "options": ["buyed", "writed", "bought"]}], "Tuesday - I": [{"question": "We _____ a great film on Friday.", "correct": "went", "options": ["goed", "went", "eated"]}, {"question": "He _____ a long letter to his friend.", "correct": "saw", "options": ["sleeped", "saw", "buyed"]}, {"question": "She _____ the car to work yesterday.", "correct": "drove", "options": ["sleeped", "writed", "drove"]}, {"question": "She _____ a beautiful dress to the party.", "correct": "watched", "options": ["watched", "drived", "eated"]}, {"question": "I _____ the newspaper in the morning.", "correct": "drank", "options": ["eated", "goed", "drank"]}, {"question": "She _____ a beautiful dress to the party.", "correct": "slept", "options": ["writed", "buyed", "slept"]}, {"question": "They looked _____ at the end of the day.", "correct": "angry", "options": ["happy", "sad", "angry"]}, {"question": "They _____ a lot of water after the match.", "correct": "drank", "options": ["eated", "drank", "goed"]}, {"question": "We _____ a great film on Friday.", "correct": "drove", "options": ["drove", "drived", "runned"]}, {"question": "Yesterday, I _____ to the market.", "correct": "studied", "options": ["drived", "runned", "studied"]}], "Tuesday - II": [{"question": "I _____ a book before sleeping.", "correct": "slept", "options": ["slept", "wented", "drived"]}, {"question": "She was _____ after hearing the news.", "correct": "sad", "options": ["tired", "sad", "hungry"]}, {"question": "Yesterday, I _____ to the market.", "correct": "went", "options": ["writed", "went", "sleeped"]}, {"question": "She was _____ after hearing the news.", "correct": "happy", "options": ["tired", "hungry", "happy"]}, {"question": "She _____ the car to work yesterday.", "correct": "drove", "options": ["buyed", "drove", "goed"]}, {"question": "She _____ the car to work yesterday.", "correct": "bought", "options": ["sawed", "bought", "drinked"]}, {"question": "We _____ a great film on Friday.", "correct": "played", "options": ["drived", "wented", "played"]}, {"question": "She _____ a beautiful dress to the party.", "correct": "drove", "options": ["goed", "drove", "sleeped"]}, {"question": "He felt _____ after the long meeting.", "correct": "cold", "options": ["happy", "cold", "angry"]}, {"question": "He _____ all day for the exam.", "correct": "played", "options": ["played", "runned", "sleeped"]}], "Tuesday - III": [{"question": "He _____ a long letter to his friend.", "correct": "slept", "options": ["slept", "drinked", "goed"]}, {"question": "They _____ pizza for dinner last night.", "correct": "walked", "options": ["wented", "eated", "walked"]}, {"question": "We _____ a great film on Friday.", "correct": "bought", "options": ["bought", "sawed", "buyed"]}, {"question": "Yesterday, I _____ to the market.", "correct": "saw", "options": ["drived", "saw", "eated"]}, {"question": "They looked _____ at the end of the day.", "correct": "angry", "options": ["angry", "bored", "happy"]}, {"question": "She _____ a beautiful dress to the party.", "correct": "walked", "options": ["drinked", "runned", "walked"]}, {"question": "My mom _____ pasta for lunch.", "correct": "ate", "options": ["ate", "goed", "runned"]}, {"question": "Yesterday, I _____ to the market.", "correct": "slept", "options": ["sawed", "slept", "buyed"]}, {"question": "They _____ a lot of water after the match.", "correct": "played", "options": ["drived", "runned", "played"]}, {"question": "They _____ pizza for dinner last night.", "correct": "slept", "options": ["goed", "drived", "slept"]}], "Wednesday - I": [{"question": "He _____ a long letter to his friend.", "correct": "studied", "options": ["buyed", "wented", "studied"]}, {"question": "I _____ a book before sleeping.", "correct": "went", "options": ["went", "writed", "buyed"]}, {"question": "We _____ a great film on Friday.", "correct": "slept", "options": ["buyed", "slept", "goed"]}, {"question": "She _____ a beautiful dress to the party.", "correct": "saw", "options": ["saw", "wented", "sawed"]}, {"question": "They _____ a lot of water after the match.", "correct": "drank", "options": ["goed", "sawed", "drank"]}, {"question": "After the run, I felt very _____.", "correct": "sad", "options": ["sad", "hungry", "tired"]}, {"question": "My mom _____ pasta for lunch.", "correct": "played", "options": ["drinked", "writed", "played"]}, {"question": "He _____ all day for the exam.", "correct": "watched", "options": ["goed", "drived", "watched"]}, {"question": "He _____ a long letter to his friend.", "correct": "walked", "options": ["sawed", "walked", "writed"]}, {"question": "They _____ a lot of water after the match.", "correct": "saw", "options": ["saw", "drived", "wented"]}], "Wednesday - II": [{"question": "They _____ pizza for dinner last night.", "correct": "cooked", "options": ["cooked", "buyed", "drived"]}, {"question": "They _____ pizza for dinner last night.", "correct": "drove", "options": ["wented", "drove", "writed"]}, {"question": "My mom _____ pasta for lunch.", "correct": "watched", "options": ["watched", "sawed", "writed"]}, {"question": "They _____ a lot of water after the match.", "correct": "watched", "options": ["sleeped", "watched", "runned"]}, {"question": "He _____ a long letter to his friend.", "correct": "wrote", "options": ["writed", "sawed", "wrote"]}, {"question": "We _____ a great film on Friday.", "correct": "watched", "options": ["runned", "goed", "watched"]}, {"question": "She _____ a beautiful dress to the party.", "correct": "bought", "options": ["sleeped", "bought", "drived"]}, {"question": "I _____ a book before sleeping.", "correct": "studied", "options": ["drived", "buyed", "studied"]}, {"question": "She _____ a beautiful dress to the party.", "correct": "drank", "options": ["buyed", "drived", "drank"]}, {"question": "After the run, I felt very _____.", "correct": "cold", "options": ["cold", "happy", "sad"]}], "Wednesday - III": [{"question": "I _____ a book before sleeping.", "correct": "drove", "options": ["drove", "drinked", "writed"]}, {"question": "I _____ a book before sleeping.", "correct": "read", "options": ["wented", "sleeped", "read"]}, {"question": "I _____ a book before sleeping.", "correct": "cooked", "options": ["wented", "cooked", "buyed"]}, {"question": "He _____ all day for the exam.", "correct": "watched", "options": ["sawed", "watched", "writed"]}, {"question": "We were _____ because of the cold.", "correct": "cold", "options": ["bored", "cold", "happy"]}, {"question": "They looked _____ at the end of the day.", "correct": "bored", "options": ["cold", "bored", "sad"]}, {"question": "My mom _____ pasta for lunch.", "correct": "studied", "options": ["studied", "writed", "goed"]}, {"question": "He _____ all day for the exam.", "correct": "played", "options": ["drived", "played", "writed"]}, {"question": "My mom _____ pasta for lunch.", "correct": "saw", "options": ["saw", "goed", "sleeped"]}, {"question": "My mom _____ pasta for lunch.", "correct": "slept", "options": ["runned", "sleeped", "slept"]}], "Thursday - I": [{"question": "She _____ the car to work yesterday.", "correct": "bought", "options": ["bought", "goed", "eated"]}, {"question": "She was _____ after hearing the news.", "correct": "excited", "options": ["excited", "angry", "tired"]}, {"question": "You _____ fast to catch the train.", "correct": "played", "options": ["played", "wented", "drived"]}, {"question": "Yesterday, I _____ to the market.", "correct": "ran", "options": ["goed", "ran", "drinked"]}, {"question": "He _____ a long letter to his friend.", "correct": "slept", "options": ["goed", "writed", "slept"]}, {"question": "They _____ pizza for dinner last night.", "correct": "bought", "options": ["runned", "bought", "buyed"]}, {"question": "I _____ a book before sleeping.", "correct": "watched", "options": ["wented", "sawed", "watched"]}, {"question": "He _____ all day for the exam.", "correct": "ate", "options": ["ate", "goed", "eated"]}, {"question": "We _____ a great film on Friday.", "correct": "read", "options": ["buyed", "eated", "read"]}, {"question": "She _____ a beautiful dress to the party.", "correct": "bought", "options": ["bought", "goed", "writed"]}], "Thursday - II": [{"question": "They _____ a lot of water after the match.", "correct": "walked", "options": ["walked", "goed", "sawed"]}, {"question": "We were _____ because of the cold.", "correct": "hungry", "options": ["happy", "hungry", "bored"]}, {"question": "He _____ all day for the exam.", "correct": "wrote", "options": ["wrote", "drinked", "writed"]}, {"question": "She _____ the car to work yesterday.", "correct": "read", "options": ["wented", "sawed", "read"]}, {"question": "We _____ a great film on Friday.", "correct": "ran", "options": ["drived", "ran", "sleeped"]}, {"question": "They _____ pizza for dinner last night.", "correct": "played", "options": ["played", "buyed", "sleeped"]}, {"question": "She _____ the car to work yesterday.", "correct": "drove", "options": ["wented", "drinked", "drove"]}, {"question": "We were _____ because of the cold.", "correct": "bored", "options": ["bored", "sad", "happy"]}, {"question": "I _____ a book before sleeping.", "correct": "ran", "options": ["eated", "ran", "goed"]}, {"question": "He _____ all day for the exam.", "correct": "watched", "options": ["watched", "sawed", "writed"]}], "Thursday - III": [{"question": "They _____ a lot of water after the match.", "correct": "read", "options": ["read", "sawed", "writed"]}, {"question": "We _____ a great film on Friday.", "correct": "saw", "options": ["buyed", "saw", "eated"]}, {"question": "I _____ the newspaper in the morning.", "correct": "slept", "options": ["buyed", "runned", "slept"]}, {"question": "They _____ a lot of water after the match.", "correct": "bought", "options": ["writed", "wented", "bought"]}, {"question": "They _____ pizza for dinner last night.", "correct": "played", "options": ["wented", "played", "goed"]}, {"question": "They _____ a lot of water after the match.", "correct": "went", "options": ["went", "wented", "runned"]}, {"question": "He felt _____ after the long meeting.", "correct": "tired", "options": ["tired", "sad", "cold"]}, {"question": "He _____ all day for the exam.", "correct": "went", "options": ["eated", "sleeped", "went"]}, {"question": "He _____ a long letter to his friend.", "correct": "bought", "options": ["runned", "goed", "bought"]}, {"question": "After the run, I felt very _____.", "correct": "cold", "options": ["hungry", "cold", "sad"]}], "Friday - I": [{"question": "I _____ a book before sleeping.", "correct": "studied", "options": ["studied", "sleeped", "wented"]}, {"question": "Yesterday, I _____ to the market.", "correct": "bought", "options": ["writed", "eated", "bought"]}, {"question": "They _____ pizza for dinner last night.", "correct": "walked", "options": ["buyed", "walked", "runned"]}, {"question": "We were _____ because of the cold.", "correct": "bored", "options": ["bored", "sad", "hungry"]}, {"question": "They looked _____ at the end of the day.", "correct": "sad", "options": ["bored", "cold", "sad"]}, {"question": "He _____ a long letter to his friend.", "correct": "slept", "options": ["buyed", "slept", "writed"]}, {"question": "They _____ pizza for dinner last night.", "correct": "wrote", "options": ["wented", "runned", "wrote"]}, {"question": "He felt _____ after the long meeting.", "correct": "sad", "options": ["sad", "hungry", "bored"]}, {"question": "We were _____ because of the cold.", "correct": "sad", "options": ["sad", "angry", "hungry"]}, {"question": "Yesterday, I _____ to the market.", "correct": "bought", "options": ["bought", "drived", "sawed"]}], "Friday - II": [{"question": "He felt _____ after the long meeting.", "correct": "cold", "options": ["cold", "hungry", "tired"]}, {"question": "They _____ pizza for dinner last night.", "correct": "slept", "options": ["slept", "sleeped", "drinked"]}, {"question": "She _____ the car to work yesterday.", "correct": "ate", "options": ["sleeped", "drived", "ate"]}, {"question": "You _____ fast to catch the train.", "correct": "played", "options": ["played", "runned", "eated"]}, {"question": "He _____ a long letter to his friend.", "correct": "saw", "options": ["drinked", "drived", "saw"]}, {"question": "They looked _____ at the end of the day.", "correct": "sad", "options": ["tired", "sad", "cold"]}, {"question": "I _____ a book before sleeping.", "correct": "cooked", "options": ["goed", "drived", "cooked"]}, {"question": "He _____ a long letter to his friend.", "correct": "ran", "options": ["goed", "sleeped", "ran"]}, {"question": "He _____ all day for the exam.", "correct": "drove", "options": ["sleeped", "writed", "drove"]}, {"question": "We _____ a great film on Friday.", "correct": "bought", "options": ["runned", "bought", "wented"]}], "Friday - III": [{"question": "We _____ a great film on Friday.", "correct": "walked", "options": ["eated", "sleeped", "walked"]}, {"question": "He _____ all day for the exam.", "correct": "read", "options": ["read", "wented", "drinked"]}, {"question": "I _____ a book before sleeping.", "correct": "watched", "options": ["runned", "watched", "drinked"]}, {"question": "I _____ the newspaper in the morning.", "correct": "cooked", "options": ["cooked", "eated", "runned"]}, {"question": "They _____ a lot of water after the match.", "correct": "slept", "options": ["slept", "goed", "wented"]}, {"question": "He _____ a long letter to his friend.", "correct": "bought", "options": ["bought", "runned", "sleeped"]}, {"question": "They _____ a lot of water after the match.", "correct": "cooked", "options": ["sleeped", "cooked", "drived"]}, {"question": "She _____ the car to work yesterday.", "correct": "watched", "options": ["buyed", "watched", "drived"]}, {"question": "I _____ the newspaper in the morning.", "correct": "ran", "options": ["drived", "ran", "writed"]}, {"question": "They _____ pizza for dinner last night.", "correct": "went", "options": ["sawed", "drinked", "went"]}], "Saturday - I": [{"question": "After the run, I felt very _____.", "correct": "excited", "options": ["happy", "excited", "hungry"]}, {"question": "They looked _____ at the end of the day.", "correct": "sad", "options": ["bored", "sad", "hungry"]}, {"question": "He _____ a long letter to his friend.", "correct": "drank", "options": ["drank", "drived", "drinked"]}, {"question": "She _____ the car to work yesterday.", "correct": "went", "options": ["went", "eated", "buyed"]}, {"question": "She _____ a beautiful dress to the party.", "correct": "read", "options": ["drived", "read", "eated"]}, {"question": "He _____ all day for the exam.", "correct": "read", "options": ["writed", "read", "goed"]}, {"question": "My mom _____ pasta for lunch.", "correct": "played", "options": ["played", "runned", "buyed"]}, {"question": "They _____ pizza for dinner last night.", "correct": "slept", "options": ["writed", "runned", "slept"]}, {"question": "I _____ a book before sleeping.", "correct": "watched", "options": ["runned", "writed", "watched"]}, {"question": "He _____ all day for the exam.", "correct": "ran", "options": ["sleeped", "ran", "goed"]}], "Saturday - II": [{"question": "He felt _____ after the long meeting.", "correct": "hungry", "options": ["hungry", "bored", "angry"]}, {"question": "We _____ a great film on Friday.", "correct": "saw", "options": ["drived", "sleeped", "saw"]}, {"question": "She _____ the car to work yesterday.", "correct": "played", "options": ["writed", "wented", "played"]}, {"question": "He _____ a long letter to his friend.", "correct": "bought", "options": ["sleeped", "bought", "goed"]}, {"question": "We _____ a great film on Friday.", "correct": "played", "options": ["buyed", "played", "wented"]}, {"question": "He _____ a long letter to his friend.", "correct": "drove", "options": ["wented", "drove", "goed"]}, {"question": "They _____ pizza for dinner last night.", "correct": "read", "options": ["read", "wented", "eated"]}, {"question": "He felt _____ after the long meeting.", "correct": "angry", "options": ["angry", "cold", "hungry"]}, {"question": "I _____ a book before sleeping.", "correct": "saw", "options": ["sawed", "wented", "saw"]}, {"question": "We _____ a great film on Friday.", "correct": "ate", "options": ["drinked", "ate", "drived"]}], "Saturday - III": [{"question": "He _____ all day for the exam.", "correct": "went", "options": ["went", "eated", "drinked"]}, {"question": "He _____ all day for the exam.", "correct": "wrote", "options": ["wrote", "writed", "drived"]}, {"question": "We were _____ because of the cold.", "correct": "cold", "options": ["cold", "tired", "hungry"]}, {"question": "He _____ a long letter to his friend.", "correct": "watched", "options": ["watched", "eated", "sleeped"]}, {"question": "They _____ pizza for dinner last night.", "correct": "walked", "options": ["walked", "writed", "goed"]}, {"question": "He felt _____ after the long meeting.", "correct": "cold", "options": ["cold", "sad", "happy"]}, {"question": "I _____ the newspaper in the morning.", "correct": "read", "options": ["drinked", "read", "drived"]}, {"question": "She _____ a beautiful dress to the party.", "correct": "wrote", "options": ["drived", "wrote", "sleeped"]}, {"question": "I _____ a book before sleeping.", "correct": "watched", "options": ["buyed", "watched", "sleeped"]}, {"question": "They _____ a lot of water after the match.", "correct": "played", "options": ["played", "goed", "sawed"]}], "Sunday - I": [{"question": "We were _____ because of the cold.", "correct": "happy", "options": ["tired", "bored", "happy"]}, {"question": "She was _____ after hearing the news.", "correct": "hungry", "options": ["happy", "sad", "hungry"]}, {"question": "We _____ a great film on Friday.", "correct": "cooked", "options": ["buyed", "writed", "cooked"]}, {"question": "She _____ the car to work yesterday.", "correct": "slept", "options": ["goed", "wented", "slept"]}, {"question": "They _____ pizza for dinner last night.", "correct": "slept", "options": ["eated", "goed", "slept"]}, {"question": "We _____ a great film on Friday.", "correct": "slept", "options": ["writed", "sawed", "slept"]}, {"question": "I _____ the newspaper in the morning.", "correct": "ate", "options": ["drived", "drinked", "ate"]}, {"question": "You _____ fast to catch the train.", "correct": "slept", "options": ["eated", "slept", "drinked"]}, {"question": "I _____ the newspaper in the morning.", "correct": "went", "options": ["wented", "went", "drinked"]}, {"question": "We were _____ because of the cold.", "correct": "excited", "options": ["hungry", "cold", "excited"]}], "Sunday - II": [{"question": "She _____ a beautiful dress to the party.", "correct": "ran", "options": ["eated", "ran", "sawed"]}, {"question": "He felt _____ after the long meeting.", "correct": "sad", "options": ["sad", "bored", "hungry"]}, {"question": "They _____ a lot of water after the match.", "correct": "bought", "options": ["bought", "wented", "sleeped"]}, {"question": "He felt _____ after the long meeting.", "correct": "happy", "options": ["happy", "angry", "bored"]}, {"question": "You _____ fast to catch the train.", "correct": "studied", "options": ["drived", "studied", "sleeped"]}, {"question": "He _____ a long letter to his friend.", "correct": "played", "options": ["sawed", "wented", "played"]}, {"question": "After the run, I felt very _____.", "correct": "happy", "options": ["happy", "sad", "tired"]}, {"question": "Yesterday, I _____ to the market.", "correct": "cooked", "options": ["cooked", "writed", "drinked"]}, {"question": "You _____ fast to catch the train.", "correct": "studied", "options": ["studied", "goed", "drived"]}, {"question": "They _____ a lot of water after the match.", "correct": "bought", "options": ["bought", "buyed", "runned"]}], "Sunday - III": [{"question": "You _____ fast to catch the train.", "correct": "walked", "options": ["sawed", "drinked", "walked"]}, {"question": "My mom _____ pasta for lunch.", "correct": "slept", "options": ["writed", "drinked", "slept"]}, {"question": "They looked _____ at the end of the day.", "correct": "sad", "options": ["angry", "excited", "sad"]}, {"question": "He _____ a long letter to his friend.", "correct": "bought", "options": ["drived", "eated", "bought"]}, {"question": "We were _____ because of the cold.", "correct": "cold", "options": ["excited", "cold", "sad"]}, {"question": "You _____ fast to catch the train.", "correct": "read", "options": ["writed", "eated", "read"]}, {"question": "After the run, I felt very _____.", "correct": "tired", "options": ["tired", "cold", "sad"]}, {"question": "My mom _____ pasta for lunch.", "correct": "ran", "options": ["wented", "ran", "buyed"]}, {"question": "He _____ all day for the exam.", "correct": "walked", "options": ["walked", "writed", "sleeped"]}, {"question": "He felt _____ after the long meeting.", "correct": "bored", "options": ["excited", "tired", "bored"]}]};
 
-<script>
-const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-const roman = ["I", "II", "III"];
-const lessonTitle = "Possessive Pronouns X Possessive Adjectives";
+    const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const blocks = ["I", "II", "III"];
+    let currentDate = new Date();
+    let currentBlockIndex = getBlockIndex();
+    let currentQuestionIndex = 0;
+    let score = 0;
 
-const questionsData = {
-  "Sunday - I": [
-    { text: "This is _____ pen. (belongs to me)", options: ["mine", "my", "me"], correct: 0 },
-    { text: "_____ mother is very kind.", options: ["My", "Mine", "Me"], correct: 0 },
-    { text: "That bag is not yours. It’s _____.", options: ["mine", "my", "me"], correct: 0 },
-    { text: "He is looking for _____ phone.", options: ["his", "him", "he"], correct: 0 },
-    { text: "We forgot _____ tickets at home.", options: ["our", "ours", "us"], correct: 0 },
-    { text: "She brought _____ lunch to school.", options: ["her", "hers", "she"], correct: 0 },
-    { text: "This is not their car. It’s _____.", options: ["ours", "our", "us"], correct: 0 },
-    { text: "Where is _____ backpack?", options: ["your", "yours", "you"], correct: 0 },
-    { text: "They are playing with _____ toys.", options: ["their", "theirs", "them"], correct: 0 },
-    { text: "_____ name is John.", options: ["His", "Him", "He"], correct: 0 }
-  ],
-  "Sunday - II": [
-    { text: "This is _____ house, not yours.", options: ["my", "mine", "me"], correct: 1 },
-    { text: "_____ dog is very friendly.", options: ["Their", "Theirs", "Them"], correct: 0 },
-    { text: "She forgot _____ keys.", options: ["her", "hers", "she"], correct: 0 },
-    { text: "That book is _____.", options: ["ours", "our", "us"], correct: 0 },
-    { text: "Is this _____ chair or his?", options: ["your", "yours", "you"], correct: 1 },
-    { text: "I like _____ new car.", options: ["my", "mine", "me"], correct: 0 },
-    { text: "The children took _____ toys.", options: ["their", "theirs", "them"], correct: 0 },
-    { text: "This jacket is _____.", options: ["mine", "my", "me"], correct: 0 },
-    { text: "He lost _____ wallet yesterday.", options: ["his", "him", "he"], correct: 0 },
-    { text: "We cleaned _____ room.", options: ["our", "ours", "us"], correct: 0 }
-  ],
-  "Sunday - III": [
-    { text: "_____ sister is a nurse.", options: ["My", "Mine", "Me"], correct: 0 },
-    { text: "That bicycle is _____.", options: ["hers", "her", "she"], correct: 0 },
-    { text: "Are these _____ shoes or hers?", options: ["your", "yours", "you"], correct: 1 },
-    { text: "They found _____ keys.", options: ["their", "theirs", "them"], correct: 0 },
-    { text: "This is _____ book.", options: ["my", "mine", "me"], correct: 0 },
-    { text: "He loves _____ job.", options: ["his", "him", "he"], correct: 0 },
-    { text: "We brought _____ lunch.", options: ["our", "ours", "us"], correct: 0 },
-    { text: "The cat lost _____ collar.", options: ["its", "it's", "it"], correct: 0 },
-    { text: "Is that _____ car outside?", options: ["your", "yours", "you"], correct: 0 },
-    { text: "This house is _____.", options: ["ours", "our", "we"], correct: 0 }
-  ],
+    function getBlockIndex() { const hour = new Date().getHours(); return hour < 12 ? 0 : hour < 18 ? 1 : 2; }
 
-  "Monday - I": [
-    { text: "This is _____ pencil.", options: ["mine", "my", "me"], correct: 0 },
-    { text: "_____ father is a doctor.", options: ["My", "Mine", "Me"], correct: 0 },
-    { text: "That bag is not yours. It’s _____.", options: ["mine", "my", "me"], correct: 0 },
-    { text: "He is calling _____ friend.", options: ["his", "him", "he"], correct: 0 },
-    { text: "We forgot _____ homework.", options: ["our", "ours", "us"], correct: 0 },
-    { text: "She found _____ keys.", options: ["her", "hers", "she"], correct: 0 },
-    { text: "This notebook is not theirs. It’s _____.", options: ["ours", "our", "us"], correct: 0 },
-    { text: "Where is _____ umbrella?", options: ["your", "yours", "you"], correct: 0 },
-    { text: "They cleaned _____ room.", options: ["their", "theirs", "them"], correct: 0 },
-    { text: "The children play with _____ toys.", options: ["their", "theirs", "them"], correct: 0 }
-  ],
-  "Monday - II": [
-    { text: "_____ jacket is red.", options: ["My", "Mine", "Me"], correct: 0 },
-    { text: "Is this _____ bag?", options: ["your", "yours", "you"], correct: 0 },
-    { text: "The dog wagged _____ tail.", options: ["its", "it's", "it"], correct: 0 },
-    { text: "That phone is _____.", options: ["hers", "her", "she"], correct: 0 },
-    { text: "We took _____ books.", options: ["our", "ours", "us"], correct: 0 },
-    { text: "He lost _____ wallet.", options: ["his", "him", "he"], correct: 0 },
-    { text: "This is not your car. It’s _____.", options: ["mine", "my", "me"], correct: 0 },
-    { text: "She loves _____ cat.", options: ["her", "hers", "she"], correct: 0 },
-    { text: "Are those _____ shoes?", options: ["your", "yours", "you"], correct: 0 },
-    { text: "The house is _____.", options: ["ours", "our", "we"], correct: 0 }
-  ],
-  "Monday - III": [
-    { text: "This is _____ dress.", options: ["my", "mine", "me"], correct: 0 },
-    { text: "_____ brother is kind.", options: ["My", "Mine", "Me"], correct: 0 },
-    { text: "They lost _____ keys.", options: ["their", "theirs", "them"], correct: 0 },
-    { text: "That bike is _____.", options: ["hers", "her", "she"], correct: 0 },
-    { text: "We cleaned _____ house.", options: ["our", "ours", "us"], correct: 0 },
-    { text: "He forgot _____ wallet.", options: ["his", "him", "he"], correct: 0 },
-    { text: "Is this _____ phone?", options: ["your", "yours", "you"], correct: 0 },
-    { text: "The children are playing with _____ toys.", options: ["their", "theirs", "them"], correct: 0 },
-    { text: "This house is _____.", options: ["ours", "our", "we"], correct: 0 },
-    { text: "She loves _____ job.", options: ["her", "hers", "she"], correct: 0 }
-  ],
+    function getCurrentKey() {
+      const day = weekdays[currentDate.getDay()];
+      const block = blocks[currentBlockIndex];
+      return `${day} - ${block}`;
+    }
 
-  "Tuesday - I": [
-    { text: "_____ dog is friendly.", options: ["My", "Mine", "Me"], correct: 0 },
-    { text: "Is this _____ book?", options: ["your", "yours", "you"], correct: 0 },
-    { text: "He lost _____ keys.", options: ["his", "him", "he"], correct: 0 },
-    { text: "This is not her bag. It’s _____.", options: ["mine", "my", "me"], correct: 0 },
-    { text: "We forgot _____ tickets.", options: ["our", "ours", "us"], correct: 0 },
-    { text: "They took _____ toys.", options: ["their", "theirs", "them"], correct: 0 },
-    { text: "The cat lost _____ collar.", options: ["its", "it's", "it"], correct: 0 },
-    { text: "Is that _____ bike outside?", options: ["your", "yours", "you"], correct: 0 },
-    { text: "This is _____ house.", options: ["my", "mine", "me"], correct: 0 },
-    { text: "He loves _____ job.", options: ["his", "him", "he"], correct: 0 }
-  ],
-  "Tuesday - II": [
-    { text: "_____ sister is kind.", options: ["My", "Mine", "Me"], correct: 0 },
-    { text: "Is this _____ phone?", options: ["your", "yours", "you"], correct: 0 },
-    { text: "She lost _____ keys.", options: ["her", "hers", "she"], correct: 0 },
-    { text: "That house is _____.", options: ["ours", "our", "we"], correct: 0 },
-    { text: "We brought _____ lunch.", options: ["our", "ours", "us"], correct: 0 },
-    { text: "They washed _____ hands.", options: ["their", "theirs", "them"], correct: 0 },
-    { text: "This jacket is _____.", options: ["mine", "my", "me"], correct: 0 },
-    { text: "He forgot _____ wallet.", options: ["his", "him", "he"], correct: 0 },
-    { text: "Where is _____ backpack?", options: ["your", "yours", "you"], correct: 0 },
-    { text: "She loves _____ cat.", options: ["her", "hers", "she"], correct: 0 }
-  ],
-  "Tuesday - III": [
-    { text: "This is _____ notebook.", options: ["my", "mine", "me"], correct: 0 },
-    { text: "_____ father is a doctor.", options: ["My", "Mine", "Me"], correct: 0 },
-    { text: "They forgot _____ tickets.", options: ["their", "theirs", "them"], correct: 0 },
-    { text: "That car is _____.", options: ["hers", "her", "she"], correct: 0 },
-    { text: "We took _____ bags.", options: ["our", "ours", "us"], correct: 0 },
-    { text: "He lost _____ phone.", options: ["his", "him", "he"], correct: 0 },
-    { text: "Is this _____ chair?", options: ["your", "yours", "you"], correct: 0 },
-    { text: "The children love _____ toys.", options: ["their", "theirs", "them"], correct: 0 },
-    { text: "This house is _____.", options: ["ours", "our", "we"], correct: 0 },
-    { text: "She forgot _____ keys.", options: ["her", "hers", "she"], correct: 0 }
-  ],
+    function loadQuiz() {
+      const key = getCurrentKey();
+      document.getElementById("weekday-title").textContent = key;
+      currentQuestionIndex = 0;
+      score = 0;
+      showQuestion();
+    }
 
-  "Wednesday - I": [
-    { text: "_____ brother is tall.", options: ["My", "Mine", "Me"], correct: 0 },
-    { text: "Is this _____ phone?", options: ["your", "yours", "you"], correct: 0 },
-    { text: "He lost _____ keys.", options: ["his", "him", "he"], correct: 0 },
-    { text: "That book is _____.", options: ["hers", "her", "she"], correct: 0 },
-    { text: "We took _____ lunch.", options: ["our", "ours", "us"], correct: 0 },
-    { text: "She found _____ wallet.", options: ["her", "hers", "she"], correct: 0 },
-    { text: "This is not their car. It’s _____.", options: ["ours", "our", "us"], correct: 0 },
-    { text: "Where is _____ umbrella?", options: ["your", "yours", "you"], correct: 0 },
-    { text: "The children play with _____ toys.", options: ["their", "theirs", "them"], correct: 0 },
-    { text: "This house is _____.", options: ["ours", "our", "we"], correct: 0 }
-  ],
-  "Wednesday - II": [
-    { text: "My jacket is red, but _____ is blue.", options: ["mine", "my", "me"], correct: 0 },
-    { text: "_____ mother is at home.", options: ["My", "Mine", "Me"], correct: 0 },
-    { text: "She lost _____ keys.", options: ["her", "hers", "she"], correct: 0 },
-    { text: "Is this _____ backpack?", options: ["your", "yours", "you"], correct: 0 },
-    { text: "We forgot _____ tickets.", options: ["our", "ours", "us"], correct: 0 },
-    { text: "That car is _____.", options: ["hers", "her", "she"], correct: 0 },
-    { text: "He loves _____ dog.", options: ["his", "him", "he"], correct: 0 },
-    { text: "This notebook is not yours. It’s _____.", options: ["mine", "my", "me"], correct: 0 },
-    { text: "They are playing with _____ toys.", options: ["their", "theirs", "them"], correct: 0 },
-    { text: "Where is _____ umbrella?", options: ["your", "yours", "you"], correct: 0 }
-  ],
-  "Wednesday - III": [
-    { text: "_____ father is a teacher.", options: ["My", "Mine", "Me"], correct: 0 },
-    { text: "Is this _____ phone?", options: ["your", "yours", "you"], correct: 0 },
-    { text: "She forgot _____ keys.", options: ["her", "hers", "she"], correct: 0 },
-    { text: "This house is _____.", options: ["ours", "our", "we"], correct: 0 },
-    { text: "We brought _____ lunch.", options: ["our", "ours", "us"], correct: 0 },
-    { text: "They washed _____ hands.", options: ["their", "theirs", "them"], correct: 0 },
-    { text: "That bag is not mine, it’s _____.", options: ["hers", "her", "she"], correct: 0 },
-    { text: "Where is _____ backpack?", options: ["your", "yours", "you"], correct: 0 },
-    { text: "He lost _____ keys yesterday.", options: ["his", "him", "he"], correct: 0 },
-    { text: "The children are playing with _____ toys.", options: ["their", "theirs", "them"], correct: 0 }
-  ],
+    function showQuestion() {
+      const key = getCurrentKey();
+      const questionSet = questionsData[key];
+      if (currentQuestionIndex >= questionSet.length) {
+        document.getElementById("question").textContent = "";
+        document.getElementById("options").innerHTML = "";
+        document.getElementById("score").textContent = `You scored ${score} out of ${questionSet.length}!`;
+        document.getElementById("progress").style.width = "100%";
+        return;
+      }
 
-  "Thursday - I": [
-    { text: "This is _____ pen.", options: ["my", "mine", "me"], correct: 1 },
-    { text: "_____ sister is a nurse.", options: ["My", "Mine", "Me"], correct: 0 },
-    { text: "They lost _____ tickets.", options: ["their", "theirs", "them"], correct: 0 },
-    { text: "That house is _____.", options: ["ours", "our", "we"], correct: 0 },
-    { text: "We forgot _____ lunch.", options: ["our", "ours", "us"], correct: 0 },
-    { text: "He loves _____ dog.", options: ["his", "him", "he"], correct: 0 },
-    { text: "Is this _____ phone?", options: ["your", "yours", "you"], correct: 0 },
-    { text: "The cat lost _____ collar.", options: ["its", "it's", "it"], correct: 0 },
-    { text: "This jacket is _____.", options: ["mine", "my", "me"], correct: 0 },
-    { text: "Where is _____ backpack?", options: ["your", "yours", "you"], correct: 0 }
-  ],
-  "Thursday - II": [
-    { text: "My mother is reading _____.", options: ["her", "hers", "she"], correct: 0 },
-    { text: "Is that _____ car outside?", options: ["your", "yours", "you"], correct: 0 },
-    { text: "They washed _____ hands.", options: ["their", "theirs", "them"], correct: 0 },
-    { text: "This is _____ notebook.", options: ["my", "mine", "me"], correct: 0 },
-    { text: "He lost _____ keys.", options: ["his", "him", "he"], correct: 0 },
-    { text: "She found _____ wallet.", options: ["her", "hers", "she"], correct: 0 },
-    { text: "We brought _____ lunch.", options: ["our", "ours", "us"], correct: 0 },
-    { text: "That bike is _____.", options: ["hers", "her", "she"], correct: 0 },
-    { text: "Are these _____ shoes?", options: ["your", "yours", "you"], correct: 0 },
-    { text: "This is not your car. It’s _____.", options: ["mine", "my", "me"], correct: 0 }
-  ],
-  "Thursday - III": [
-    { text: "This is _____ dress.", options: ["my", "mine", "me"], correct: 0 },
-    { text: "_____ brother is kind.", options: ["My", "Mine", "Me"], correct: 0 },
-    { text: "They lost _____ keys.", options: ["their", "theirs", "them"], correct: 0 },
-    { text: "Is this _____ phone?", options: ["your", "yours", "you"], correct: 0 },
-    { text: "We cleaned _____ house.", options: ["our", "ours", "us"], correct: 0 },
-    { text: "He forgot _____ wallet.", options: ["his", "him", "he"], correct: 0 },
-    { text: "The children are playing with _____ toys.", options: ["their", "theirs", "them"], correct: 0 },
-    { text: "This house is _____.", options: ["ours", "our", "we"], correct: 0 },
-    { text: "She loves _____ job.", options: ["her", "hers", "she"], correct: 0 },
-    { text: "Where is _____ backpack?", options: ["your", "yours", "you"], correct: 0 }
-  ],
+      const q = questionSet[currentQuestionIndex];
+      document.getElementById("question").textContent = q.question;
+      document.getElementById("score").textContent = "";
+      const optionsDiv = document.getElementById("options");
+      optionsDiv.innerHTML = "";
+      q.options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.textContent = opt;
+        btn.className = "option";
+        btn.onclick = () => handleAnswer(btn, opt === q.correct);
+        optionsDiv.appendChild(btn);
+      });
+      document.getElementById("progress").style.width = `${(currentQuestionIndex / questionSet.length) * 100}%`;
+    }
 
-  "Friday - I": [
-    { text: "_____ mother is at work.", options: ["My", "Mine", "Me"], correct: 0 },
-    { text: "Is this _____ pen?", options: ["your", "yours", "you"], correct: 0 },
-    { text: "He lost _____ keys.", options: ["his", "him", "he"], correct: 0 },
-    { text: "They forgot _____ tickets.", options: ["their", "theirs", "them"], correct: 0 },
-    { text: "This is _____ book.", options: ["my", "mine", "me"], correct: 0 },
-    { text: "She found _____ wallet.", options: ["her", "hers", "she"], correct: 0 },
-    { text: "We brought _____ lunch.", options: ["our", "ours", "us"], correct: 0 },
-    { text: "That car is _____.", options: ["hers", "her", "she"], correct: 0 },
-    { text: "The children are playing with _____ toys.", options: ["their", "theirs", "them"], correct: 0 },
-    { text: "Where is _____ umbrella?", options: ["your", "yours", "you"], correct: 0 }
-  ],
-  "Friday - II": [
-    { text: "My dog is very friendly.", options: ["my", "mine", "me"], correct: 0 },
-    { text: "Is that _____ jacket?", options: ["your", "yours", "you"], correct: 0 },
-    { text: "She lost _____ keys.", options: ["her", "hers", "she"], correct: 0 },
-    { text: "That house is _____.", options: ["ours", "our", "we"], correct: 0 },
-    { text: "He forgot _____ wallet.", options: ["his", "him", "he"], correct: 0 },
-    { text: "We washed _____ hands.", options: ["our", "ours", "us"], correct: 0 },
-    { text: "This notebook is _____.", options: ["mine", "my", "me"], correct: 0 },
-    { text: "Are those _____ shoes?", options: ["your", "yours", "you"], correct: 0 },
-    { text: "The cat lost _____ collar.", options: ["its", "it's", "it"], correct: 0 },
-    { text: "Where is _____ backpack?", options: ["your", "yours", "you"], correct: 0 }
-  ],
-  "Friday - III": [
-    { text: "This is _____ dress.", options: ["my", "mine", "me"], correct: 0 },
-    { text: "_____ brother is kind.", options: ["My", "Mine", "Me"], correct: 0 },
-    { text: "They lost _____ keys.", options: ["their", "theirs", "them"], correct: 0 },
-    { text: "Is this _____ phone?", options: ["your", "yours", "you"], correct: 0 },
-    { text: "We cleaned _____ house.", options: ["our", "ours", "us"], correct: 0 },
-    { text: "He forgot _____ wallet.", options: ["his", "him", "he"], correct: 0 },
-    { text: "The children are playing with _____ toys.", options: ["their", "theirs", "them"], correct: 0 },
-    { text: "This house is _____.", options: ["ours", "our", "we"], correct: 0 },
-    { text: "She loves _____ job.", options: ["her", "hers", "she"], correct: 0 },
-    { text: "Where is _____ backpack?", options: ["your", "yours", "you"], correct: 0 }
-  ],
+    function handleAnswer(button, isCorrect) {
+      const buttons = document.querySelectorAll(".option");
+      buttons.forEach(btn => btn.disabled = true);
+      if (isCorrect) {
+        button.classList.add("correct");
+        score++;
+      } else {
+        button.classList.add("incorrect");
+        const key = getCurrentKey();
+        const correct = questionsData[key][currentQuestionIndex].correct;
+        buttons.forEach(btn => {
+          if (btn.textContent === correct) btn.classList.add("correct");
+        });
+      }
+      setTimeout(() => {
+        currentQuestionIndex++;
+        showQuestion();
+      }, 1000);
+    }
 
-  "Saturday - I": [
-    { text: "_____ mother is cooking.", options: ["My", "Mine", "Me"], correct: 0 },
-    { text: "Is this _____ pen?", options: ["your", "yours", "you"], correct: 0 },
-    { text: "He lost _____ keys.", options: ["his", "him", "he"], correct: 0 },
-    { text: "They forgot _____ tickets.", options: ["their", "theirs", "them"], correct: 0 },
-    { text: "This is _____ book.", options: ["my", "mine", "me"], correct: 0 },
-    { text: "She found _____ wallet.", options: ["her", "hers", "she"], correct: 0 },
-    { text: "We brought _____ lunch.", options: ["our", "ours", "us"], correct: 0 },
-    { text: "That car is _____.", options: ["hers", "her", "she"], correct: 0 },
-    { text: "The children are playing with _____ toys.", options: ["their", "theirs", "them"], correct: 0 },
-    { text: "Where is _____ umbrella?", options: ["your", "yours", "you"], correct: 0 }
-  ],
-  "Saturday - II": [
-    { text: "My dog is very friendly.", options: ["my", "mine", "me"], correct: 0 },
-    { text: "Is that _____ jacket?", options: ["your", "yours", "you"], correct: 0 },
-    { text: "She lost _____ keys.", options: ["her", "hers", "she"], correct: 0 },
-    { text: "That house is _____.", options: ["ours", "our", "we"], correct: 0 },
-    { text: "He forgot _____ wallet.", options: ["his", "him", "he"], correct: 0 },
-    { text: "We washed _____ hands.", options: ["our", "ours", "us"], correct: 0 },
-    { text: "This notebook is _____.", options: ["mine", "my", "me"], correct: 0 },
-    { text: "Are those _____ shoes?", options: ["your", "yours", "you"], correct: 0 },
-    { text: "The cat lost _____ collar.", options: ["its", "it's", "it"], correct: 0 },
-    { text: "Where is _____ backpack?", options: ["your", "yours", "you"], correct: 0 }
-  ],
-  "Saturday - III": [
-    { text: "This is _____ dress.", options: ["my", "mine", "me"], correct: 0 },
-    { text: "_____ brother is kind.", options: ["My", "Mine", "Me"], correct: 0 },
-    { text: "They lost _____ keys.", options: ["their", "theirs", "them"], correct: 0 },
-    { text: "Is this _____ phone?", options: ["your", "yours", "you"], correct: 0 },
-    { text: "We cleaned _____ house.", options: ["our", "ours", "us"], correct: 0 },
-    { text: "He forgot _____ wallet.", options: ["his", "him", "he"], correct: 0 },
-    { text: "The children are playing with _____ toys.", options: ["their", "theirs", "them"], correct: 0 },
-    { text: "This house is _____.", options: ["ours", "our", "we"], correct: 0 },
-    { text: "She loves _____ job.", options: ["her", "hers", "she"], correct: 0 },
-    { text: "Where is _____ backpack?", options: ["your", "yours", "you"], correct: 0 }
-  ]
-};
+    document.addEventListener("keydown", e => {
+      if (e.code === "NumpadAdd") { currentBlockIndex = (currentBlockIndex + 1) % 3; loadQuiz(); }
+      if (e.code === "NumpadSubtract") { currentBlockIndex = (currentBlockIndex + 2) % 3; loadQuiz(); }
+      if (e.code === "NumpadMultiply") { currentDate.setDate(currentDate.getDate() + 1); loadQuiz(); }
+    });
 
-let currentDayIndex = new Date().getDay();
-let hours = new Date().getHours();
-let block = hours < 12 ? 0 : hours < 17 ? 1 : 2;
-let currentKey = `${weekdays[currentDayIndex]} - ${roman[block]}`;
-
-const lessonDay = document.getElementById("lessonDay");
-const lessonTitleEl = document.getElementById("lessonTitle");
-const questionEl = document.getElementById("question");
-const optionsEl = document.getElementById("options");
-const barEl = document.getElementById("bar");
-const scoreEl = document.getElementById("score");
-
-let currentIndex = 0;
-let score = 0;
-let acceptingAnswers = true;
-
-function loadQuestion() {
-  acceptingAnswers = true;
-  const q = questionsData[currentKey][currentIndex];
-  lessonDay.textContent = `${currentKey}`;
-  lessonTitleEl.textContent = lessonTitle;
-  questionEl.innerHTML = q.text;
-  optionsEl.innerHTML = "";
-  scoreEl.classList.add("hidden");
-  barEl.style.width = `${(currentIndex / 10) * 100}%`;
-
-  q.options.forEach((opt, i) => {
-    const button = document.createElement("button");
-    button.className = "option";
-    button.textContent = opt;
-    button.onclick = () => selectOption(i);
-    optionsEl.appendChild(button);
-  });
-}
-
-function selectOption(selected) {
-  if (!acceptingAnswers) return;
-  acceptingAnswers = false;
-
-  const q = questionsData[currentKey][currentIndex];
-  const buttons = optionsEl.querySelectorAll("button");
-
-  buttons.forEach((btn, i) => {
-    btn.disabled = true;
-    if (i === q.correct) btn.classList.add("correct");
-    if (i === selected && selected !== q.correct) btn.classList.add("incorrect");
-  });
-
-  if (selected === q.correct) score++;
-  currentIndex++;
-  barEl.style.width = `${(currentIndex / 10) * 100}%`;
-
-  if (currentIndex < 10) {
-    setTimeout(loadQuestion, 2000);
-  } else {
-    setTimeout(showScore, 2000);
-  }
-}
-
-function showScore() {
-  questionEl.textContent = "";
-  optionsEl.innerHTML = "";
-  scoreEl.textContent = `You scored ${score} out of 10!`;
-  scoreEl.classList.remove("hidden");
-  barEl.style.width = "100%";
-}
-
-window.addEventListener("keydown", (e) => {
-  if (e.code === "NumpadAdd") {
-    block = (block + 1) % 3;
-    currentKey = `${weekdays[currentDayIndex]} - ${roman[block]}`;
-    resetLesson();
-  } else if (e.code === "NumpadSubtract") {
-    block = (block - 1 + 3) % 3;
-    currentKey = `${weekdays[currentDayIndex]} - ${roman[block]}`;
-    resetLesson();
-  }
-});
-
-function resetLesson() {
-  currentIndex = 0;
-  score = 0;
-  scoreEl.classList.add("hidden");
-  barEl.style.width = "0%";
-  loadQuestion();
-}
-
-loadQuestion();
-</script>
+    loadQuiz();
+  </script>
 </body>
 </html>
